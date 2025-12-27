@@ -14,13 +14,13 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0f0f1a;
-  --bg-card: #1a1a2e;
+  --bg: #0a0a12;
+  --bg-card: rgba(26, 26, 46, 0.9);
   --text: #f0f0f5;
   --text-muted: #a0a4b8;
   --accent: #3b82f6;
   --accent-hover: #60a5fa;
-  --border: #2a2a40;
+  --border: rgba(60, 60, 100, 0.5);
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 20px rgba(0,0,0,0.3);
   --shadow-lg: 0 10px 40px rgba(0,0,0,0.4);
@@ -42,41 +42,18 @@ body {
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-.gradient-bg {
+/* Fluid Background Canvas */
+.fluid-bg {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: -1;
-  background: 
-    linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 25%, #f5f0ff 50%, #fef5f5 75%, #f0f9ff 100%);
-}
-
-.gradient-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 50%, rgba(14, 165, 233, 0.06) 0%, transparent 50%);
-  animation: gradientShift 20s ease-in-out infinite alternate;
-}
-
-@keyframes gradientShift {
-  0% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0.8; transform: scale(1.1); }
-}
-
-[data-theme="dark"] .gradient-bg {
-  background: linear-gradient(135deg, #0a0a1a 0%, #0f0f2a 50%, #1a1a3e 100%);
-}
-
-[data-theme="dark"] .gradient-bg::before {
-  background:
-    radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
-    radial-gradient(ellipse at 40% 60%, rgba(14, 165, 233, 0.08) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 a {

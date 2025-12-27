@@ -1,3 +1,186 @@
+// ========== INTERACTIVE FLUID BACKGROUND ==========
+const fluidCanvas = document.getElementById('fluidBg');
+const fluidCtx = fluidCanvas.getContext('2d');
+
+let fluidWidth, fluidHeight;
+let mouseX = 0, mouseY = 0;
+let targetX = 0, targetY = 0;
+
+// Blob class for fluid effect
+class Blob {
+  constructor(x, y, radius, color, speed) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+    this.speed = speed;
+    this.angle = Math.random() * Math.PI * 2;
+    this.vx = Math.cos(this.angle) * speed;
+    this.vy = Math.sin(this.angle) * speed;
+    this.originalRadius = radius;
+    this.pulseSpeed = 0.02 + Math.random() * 0.02;
+    this.pulsePhase = Math.random() * Math.PI * 2;
+  }
+
+  update(mouseX, mouseY) {
+    // Smooth movement
+    this.x += this.vx;
+    this.y += this.vy;
+
+    // Bounce off edges with smooth transition
+    if (this.x < -this.radius) this.x = fluidWidth + this.radius;
+    if (this.x > fluidWidth + this.radius) this.x = -this.radius;
+    if (this.y < -this.radius) this.y = fluidHeight + this.radius;
+    if (this.y > fluidHeight + this.radius) this.y = -this.radius;
+
+    // Mouse interaction - gentle attraction
+    const dx = mouseX - this.x;
+    const dy = mouseY - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    
+    if (dist < 300) {
+      const force = (300 - dist) / 300 * 0.02;
+      this.vx += dx * force * 0.01;
+      this.vy += dy * force * 0.01;
+    }
+
+    // Limit velocity
+    const maxSpeed = this.speed * 1.5;
+    const currentSpeed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+    if (currentSpeed > maxSpeed) {
+      this.vx = (this.vx / currentSpeed) * maxSpeed;
+      this.vy = (this.vy / currentSpeed) * maxSpeed;
+    }
+
+    // Pulsing radius
+    this.pulsePhase += this.pulseSpeed;
+    this.radius = this.originalRadius + Math.sin(this.pulsePhase) * (this.originalRadius * 0.15);
+  }
+
+  draw(ctx) {
+    const gradient = ctx.createRadialGradient(
+      this.x, this.y, 0,
+      this.x, this.y, this.radius
+    );
+    gradient.addColorStop(0, this.color);
+    gradient.addColorStop(1, 'transparent');
+    
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+  }
+}
+
+let blobs = [];
+
+function getFluidColors() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  if (isDark) {
+    return [
+      'rgba(59, 130, 246, 0.25)',   // Blue
+      'rgba(139, 92, 246, 0.2)',    // Purple
+      'rgba(236, 72, 153, 0.15)',   // Pink
+      'rgba(14, 165, 233, 0.2)',    // Cyan
+      'rgba(168, 85, 247, 0.18)',   // Violet
+      'rgba(99, 102, 241, 0.22)',   // Indigo
+    ];
+  } else {
+    return [
+      'rgba(59, 130, 246, 0.15)',   // Blue
+      'rgba(139, 92, 246, 0.12)',   // Purple
+      'rgba(236, 72, 153, 0.1)',    // Pink
+      'rgba(14, 165, 233, 0.12)',   // Cyan
+      'rgba(168, 85, 247, 0.1)',    // Violet
+      'rgba(99, 102, 241, 0.12)',   // Indigo
+    ];
+  }
+}
+
+function initFluidBlobs() {
+  blobs = [];
+  const colors = getFluidColors();
+  const blobCount = Math.min(12, Math.floor((fluidWidth * fluidHeight) / 80000));
+  
+  for (let i = 0; i < blobCount; i++) {
+    const radius = 150 + Math.random() * 250;
+    const x = Math.random() * fluidWidth;
+    const y = Math.random() * fluidHeight;
+    const color = colors[i % colors.length];
+    const speed = 0.3 + Math.random() * 0.4;
+    blobs.push(new Blob(x, y, radius, color, speed));
+  }
+}
+
+function resizeFluidCanvas() {
+  fluidWidth = window.innerWidth;
+  fluidHeight = window.innerHeight;
+  fluidCanvas.width = fluidWidth;
+  fluidCanvas.height = fluidHeight;
+  initFluidBlobs();
+}
+
+function drawFluidBackground() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  
+  // Clear with background color
+  if (isDark) {
+    fluidCtx.fillStyle = '#0a0a12';
+  } else {
+    fluidCtx.fillStyle = '#f8fafc';
+  }
+  fluidCtx.fillRect(0, 0, fluidWidth, fluidHeight);
+  
+  // Smooth mouse following
+  targetX += (mouseX - targetX) * 0.05;
+  targetY += (mouseY - targetY) * 0.05;
+  
+  // Update and draw blobs
+  for (const blob of blobs) {
+    blob.update(targetX, targetY);
+    blob.draw(fluidCtx);
+  }
+  
+  // Add subtle noise/grain overlay for texture
+  if (isDark) {
+    fluidCtx.fillStyle = 'rgba(255, 255, 255, 0.01)';
+  } else {
+    fluidCtx.fillStyle = 'rgba(0, 0, 0, 0.01)';
+  }
+  
+  requestAnimationFrame(drawFluidBackground);
+}
+
+// Mouse tracking
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+// Touch support
+document.addEventListener('touchmove', (e) => {
+  if (e.touches.length > 0) {
+    mouseX = e.touches[0].clientX;
+    mouseY = e.touches[0].clientY;
+  }
+});
+
+// Initialize
+window.addEventListener('resize', resizeFluidCanvas);
+resizeFluidCanvas();
+drawFluidBackground();
+
+// Update blob colors when theme changes
+const fluidThemeObserver = new MutationObserver(() => {
+  const colors = getFluidColors();
+  blobs.forEach((blob, i) => {
+    blob.color = colors[i % colors.length];
+  });
+});
+fluidThemeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+
+// ========== THEME TOGGLE ==========
 // Theme toggle
 const themeToggle = document.getElementById('themeToggle');
 const storedTheme = localStorage.getItem('portfolio-theme') || 'light';
