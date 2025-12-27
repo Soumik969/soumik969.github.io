@@ -33,7 +33,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Projects data - Edit this array to add your projects
+  // Back to Top Button
+  const backToTopBtn = document.getElementById('backToTop');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
+  });
+
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+
+  // Projects data
   const projects = [
     {
       title: "Klein Tunneling in Graphene",
@@ -135,11 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('click', () => {
       const gameId = tab.dataset.game;
       
-      // Update tabs
       gameTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       
-      // Update panels
       gamePanels.forEach(p => p.classList.remove('active'));
       document.getElementById(`${gameId}-game`).classList.add('active');
     });
@@ -152,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const scoreEl = document.getElementById('score');
   const statusEl = document.getElementById('gameStatus');
 
-  // Game constants
   const GRAVITY = 0.35;
   const JUMP_FORCE = -7;
   const PIPE_SPEED = 1.8;
@@ -160,19 +175,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const PIPE_WIDTH = 55;
   const GROUND_HEIGHT = 40;
 
-  // Game state
   let gameState = 'idle';
   let score = 0;
   let highScore = parseInt(localStorage.getItem('flappyHighScore')) || 0;
   let pipeTimer = 0;
   const PIPE_INTERVAL = 100;
 
-  // Parallax background
   let bgOffset = 0;
   let cloudOffset = 0;
   let groundOffset = 0;
 
-  // Bird
   const bird = {
     x: 100,
     y: 200,
@@ -246,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Pipes
   let pipes = [];
 
   function createPipe() {
@@ -441,13 +452,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     
     const roastMessages = [
-      { max: 0, msg: '💀 You didn\'t even try!', emoji: '🤡' },
-      { max: 3, msg: '😂 My grandma plays better!', emoji: '👵' },
-      { max: 5, msg: '🐣 Are you a baby bird?', emoji: '😅' },
-      { max: 10, msg: '🥴 Skill issue detected!', emoji: '📉' },
-      { max: 20, msg: '😬 Almost decent... almost', emoji: '🫠' },
-      { max: 50, msg: '👀 Ok you\'re getting there', emoji: '🔥' },
-      { max: Infinity, msg: '🏆 Respect! You\'re a legend!', emoji: '👑' }
+      { max: 0, msg: "You didn't even try!", emoji: '🤡' },
+      { max: 3, msg: 'My grandma plays better!', emoji: '👵' },
+      { max: 5, msg: 'Are you a baby bird?', emoji: '😅' },
+      { max: 10, msg: 'Skill issue detected!', emoji: '📉' },
+      { max: 20, msg: 'Almost decent... almost', emoji: '🫠' },
+      { max: 50, msg: "Ok you're getting there", emoji: '🔥' },
+      { max: Infinity, msg: "Respect! You're a legend!", emoji: '👑' }
     ];
     
     const roast = roastMessages.find(r => score <= r.max);
@@ -602,14 +613,12 @@ document.addEventListener('DOMContentLoaded', () => {
     gameState = 'playing';
   }
 
-  // Event listeners - START button only starts the game
   startBtn.addEventListener('click', () => {
     if (gameState === 'idle' || gameState === 'gameover') {
       startGame();
     }
   });
 
-  // Canvas click/touch only flaps during gameplay
   canvas.addEventListener('click', () => {
     if (gameState === 'playing') {
       bird.jump();
@@ -623,7 +632,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Space only flaps during gameplay
   document.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
       e.preventDefault();
@@ -631,9 +639,13 @@ document.addEventListener('DOMContentLoaded', () => {
         bird.jump();
       }
     }
+    if (e.code === 'Enter') {
+      if (gameState === 'idle' || gameState === 'gameover') {
+        startGame();
+      }
+    }
   });
 
-  // Initialize Flappy Bird
   statusEl.textContent = 'Click START to begin!';
   requestAnimationFrame(gameLoop);
 
@@ -644,12 +656,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const snakeScoreEl = document.getElementById('snakeScore');
   const snakeStatusEl = document.getElementById('snakeStatus');
 
-  // Snake game constants
   const GRID_SIZE = 20;
   const TILE_COUNT = snakeCanvas.width / GRID_SIZE;
   const SNAKE_SPEED = 100;
 
-  // Snake game state
   let snake = [];
   let food = { x: 0, y: 0 };
   let direction = { x: 0, y: 0 };
@@ -659,7 +669,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let snakeGameState = 'idle';
   let snakeGameInterval = null;
 
-  // Snake colors
   function getSnakeColors() {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     return {
@@ -855,13 +864,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const colors = getSnakeColors();
     
     const roastMessages = [
-      { max: 0, msg: '💀 You ate yourself instantly!', emoji: '🤦' },
-      { max: 20, msg: '🐛 More like a worm than a snake', emoji: '😂' },
-      { max: 50, msg: '🥶 Cold blooded failure!', emoji: '🫣' },
-      { max: 100, msg: '😤 Skill issue! Try harder!', emoji: '📉' },
-      { max: 150, msg: '🐍 Now we\'re talking!', emoji: '👀' },
-      { max: 200, msg: '🔥 Snek master loading...', emoji: '💪' },
-      { max: Infinity, msg: '👑 You ARE the snake king!', emoji: '🏆' }
+      { max: 0, msg: 'You ate yourself instantly!', emoji: '🤦' },
+      { max: 20, msg: 'More like a worm than a snake', emoji: '😂' },
+      { max: 50, msg: 'Cold blooded failure!', emoji: '🫣' },
+      { max: 100, msg: 'Skill issue! Try harder!', emoji: '📉' },
+      { max: 150, msg: "Now we're talking!", emoji: '👀' },
+      { max: 200, msg: 'Snek master loading...', emoji: '💪' },
+      { max: Infinity, msg: 'You ARE the snake king!', emoji: '🏆' }
     ];
     
     const roast = roastMessages.find(r => snakeScore <= r.max);
@@ -984,7 +993,6 @@ document.addEventListener('DOMContentLoaded', () => {
     snakeGameInterval = setInterval(snakeGameLoop, SNAKE_SPEED);
   }
 
-  // Snake controls
   document.addEventListener('keydown', (e) => {
     if (snakeGameState !== 'playing') return;
     
@@ -1016,10 +1024,333 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Snake start button
   snakeStartBtn.addEventListener('click', startSnakeGame);
-
-  // Initialize snake game display
   drawSnakeStartScreen();
+
+  // ========== TIC TAC TOE GAME ==========
+  const tttBoard = document.getElementById('tttBoard');
+  const tttCells = document.querySelectorAll('.ttt-cell');
+  const tttStatus = document.getElementById('tttStatus');
+  const tttResetBtn = document.getElementById('tttResetBtn');
+
+  let tttState = ['', '', '', '', '', '', '', '', ''];
+  let currentPlayer = 'X';
+  let tttGameActive = true;
+
+  const winConditions = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
+
+  function checkTTTWinner() {
+    for (const condition of winConditions) {
+      const [a, b, c] = condition;
+      if (tttState[a] && tttState[a] === tttState[b] && tttState[a] === tttState[c]) {
+        return { winner: tttState[a], line: condition };
+      }
+    }
+    if (!tttState.includes('')) {
+      return { winner: 'tie', line: null };
+    }
+    return null;
+  }
+
+  function aiMove() {
+    if (!tttGameActive || currentPlayer !== 'O') return;
+
+    const emptyIndices = tttState.map((cell, idx) => cell === '' ? idx : null).filter(idx => idx !== null);
+    
+    if (emptyIndices.length === 0) return;
+
+    // Simple AI: Try to win, then block, then random
+    let move = null;
+
+    // Try to win
+    for (const idx of emptyIndices) {
+      tttState[idx] = 'O';
+      if (checkTTTWinner()?.winner === 'O') {
+        tttState[idx] = '';
+        move = idx;
+        break;
+      }
+      tttState[idx] = '';
+    }
+
+    // Try to block
+    if (move === null) {
+      for (const idx of emptyIndices) {
+        tttState[idx] = 'X';
+        if (checkTTTWinner()?.winner === 'X') {
+          tttState[idx] = '';
+          move = idx;
+          break;
+        }
+        tttState[idx] = '';
+      }
+    }
+
+    // Take center if available
+    if (move === null && tttState[4] === '') {
+      move = 4;
+    }
+
+    // Random move
+    if (move === null) {
+      move = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+    }
+
+    setTimeout(() => {
+      if (!tttGameActive) return;
+      
+      tttState[move] = 'O';
+      tttCells[move].textContent = 'O';
+      tttCells[move].classList.add('o');
+
+      const result = checkTTTWinner();
+      if (result) {
+        tttGameActive = false;
+        if (result.winner === 'tie') {
+          tttStatus.textContent = "It's a tie!";
+        } else {
+          tttStatus.textContent = `${result.winner} wins!`;
+          result.line.forEach(idx => tttCells[idx].classList.add('winner'));
+        }
+      } else {
+        currentPlayer = 'X';
+        tttStatus.textContent = "Your turn (X)";
+      }
+    }, 500);
+  }
+
+  function handleTTTClick(e) {
+    const cell = e.target;
+    const index = parseInt(cell.dataset.index);
+
+    if (tttState[index] !== '' || !tttGameActive || currentPlayer !== 'X') return;
+
+    tttState[index] = 'X';
+    cell.textContent = 'X';
+    cell.classList.add('x');
+
+    const result = checkTTTWinner();
+    if (result) {
+      tttGameActive = false;
+      if (result.winner === 'tie') {
+        tttStatus.textContent = "It's a tie!";
+      } else {
+        tttStatus.textContent = `${result.winner} wins!`;
+        result.line.forEach(idx => tttCells[idx].classList.add('winner'));
+      }
+    } else {
+      currentPlayer = 'O';
+      tttStatus.textContent = "AI is thinking...";
+      aiMove();
+    }
+  }
+
+  function resetTTT() {
+    tttState = ['', '', '', '', '', '', '', '', ''];
+    currentPlayer = 'X';
+    tttGameActive = true;
+    tttStatus.textContent = 'You are X. Your turn!';
+    tttCells.forEach(cell => {
+      cell.textContent = '';
+      cell.classList.remove('x', 'o', 'winner');
+    });
+  }
+
+  tttCells.forEach(cell => cell.addEventListener('click', handleTTTClick));
+  tttResetBtn.addEventListener('click', resetTTT);
+
+  // ========== MEMORY GAME ==========
+  const memoryBoard = document.getElementById('memoryBoard');
+  const memoryMovesEl = document.getElementById('memoryMoves');
+  const memoryStatusEl = document.getElementById('memoryStatus');
+  const memoryResetBtn = document.getElementById('memoryResetBtn');
+
+  const memoryEmojis = ['🎮', '🎯', '🎨', '🎪', '🎭', '🎰', '🎲', '🎸'];
+  let memoryCards = [];
+  let flippedCards = [];
+  let matchedPairs = 0;
+  let memoryMoves = 0;
+  let memoryLocked = false;
+
+  function createMemoryGame() {
+    const cardPairs = [...memoryEmojis, ...memoryEmojis];
+    memoryCards = cardPairs.sort(() => Math.random() - 0.5);
+    
+    memoryBoard.innerHTML = '';
+    matchedPairs = 0;
+    memoryMoves = 0;
+    flippedCards = [];
+    memoryLocked = false;
+    memoryMovesEl.textContent = '0';
+    memoryStatusEl.textContent = 'Match all the pairs!';
+
+    memoryCards.forEach((emoji, index) => {
+      const card = document.createElement('div');
+      card.className = 'memory-card';
+      card.dataset.index = index;
+      card.dataset.emoji = emoji;
+      card.innerHTML = `<span class="memory-card-content">${emoji}</span>`;
+      card.addEventListener('click', handleMemoryClick);
+      memoryBoard.appendChild(card);
+    });
+  }
+
+  function handleMemoryClick(e) {
+    if (memoryLocked) return;
+    
+    const card = e.currentTarget;
+    if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+    card.classList.add('flipped');
+    flippedCards.push(card);
+
+    if (flippedCards.length === 2) {
+      memoryMoves++;
+      memoryMovesEl.textContent = memoryMoves;
+      memoryLocked = true;
+
+      const [card1, card2] = flippedCards;
+      
+      if (card1.dataset.emoji === card2.dataset.emoji) {
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        matchedPairs++;
+        flippedCards = [];
+        memoryLocked = false;
+
+        if (matchedPairs === memoryEmojis.length) {
+          memoryStatusEl.textContent = `🎉 You won in ${memoryMoves} moves!`;
+        }
+      } else {
+        setTimeout(() => {
+          card1.classList.remove('flipped');
+          card2.classList.remove('flipped');
+          flippedCards = [];
+          memoryLocked = false;
+        }, 1000);
+      }
+    }
+  }
+
+  memoryResetBtn.addEventListener('click', createMemoryGame);
+  createMemoryGame();
+
+  // ========== TYPING TEST GAME ==========
+  const typingText = document.getElementById('typingText');
+  const typingInput = document.getElementById('typingInput');
+  const typingWpm = document.getElementById('typingWpm');
+  const typingAccuracy = document.getElementById('typingAccuracy');
+  const typingTime = document.getElementById('typingTime');
+  const typingStatus = document.getElementById('typingStatus');
+  const typingStartBtn = document.getElementById('typingStartBtn');
+
+  const typingParagraphs = [
+    "The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.",
+    "Physics is the natural science that studies matter and energy. It explores the fundamental laws of the universe.",
+    "Machine learning enables computers to learn from data. It is transforming industries around the world.",
+    "Programming is the art of telling a computer what to do. Good code is both efficient and readable.",
+    "Quantum mechanics describes nature at the smallest scales. Particles behave as both waves and particles.",
+    "Data science combines statistics and programming. It helps us find patterns in complex datasets.",
+    "The universe is vast and mysterious. Scientists continue to explore its many wonders every day."
+  ];
+
+  let typingGameActive = false;
+  let typingStartTime = null;
+  let typingInterval = null;
+  let currentParagraph = '';
+  let typingTimeLeft = 30;
+
+  function startTypingTest() {
+    currentParagraph = typingParagraphs[Math.floor(Math.random() * typingParagraphs.length)];
+    typingText.innerHTML = currentParagraph.split('').map((char, i) => 
+      `<span class="${i === 0 ? 'current' : ''}">${char}</span>`
+    ).join('');
+    
+    typingInput.value = '';
+    typingInput.disabled = false;
+    typingInput.focus();
+    
+    typingGameActive = true;
+    typingStartTime = null;
+    typingTimeLeft = 30;
+    typingTime.textContent = typingTimeLeft;
+    typingWpm.textContent = '0';
+    typingAccuracy.textContent = '100';
+    typingStatus.textContent = 'Start typing!';
+    typingStartBtn.textContent = 'Restart';
+
+    if (typingInterval) clearInterval(typingInterval);
+  }
+
+  function endTypingTest() {
+    typingGameActive = false;
+    typingInput.disabled = true;
+    if (typingInterval) clearInterval(typingInterval);
+    typingStatus.textContent = 'Time\'s up! Click START to try again.';
+    typingStartBtn.textContent = 'Start Test';
+  }
+
+  function updateTypingStats() {
+    const typed = typingInput.value;
+    const elapsed = (Date.now() - typingStartTime) / 1000 / 60; // minutes
+    const words = typed.length / 5; // standard word = 5 chars
+    const wpm = Math.round(words / elapsed) || 0;
+    
+    let correct = 0;
+    for (let i = 0; i < typed.length; i++) {
+      if (typed[i] === currentParagraph[i]) correct++;
+    }
+    const accuracy = typed.length > 0 ? Math.round((correct / typed.length) * 100) : 100;
+    
+    typingWpm.textContent = wpm;
+    typingAccuracy.textContent = accuracy;
+  }
+
+  typingInput.addEventListener('input', () => {
+    if (!typingGameActive) return;
+
+    if (!typingStartTime) {
+      typingStartTime = Date.now();
+      typingInterval = setInterval(() => {
+        typingTimeLeft--;
+        typingTime.textContent = typingTimeLeft;
+        if (typingTimeLeft <= 0) {
+          endTypingTest();
+        }
+      }, 1000);
+    }
+
+    const typed = typingInput.value;
+    const chars = typingText.querySelectorAll('span');
+
+    chars.forEach((char, i) => {
+      char.classList.remove('correct', 'incorrect', 'current');
+      
+      if (i < typed.length) {
+        if (typed[i] === currentParagraph[i]) {
+          char.classList.add('correct');
+        } else {
+          char.classList.add('incorrect');
+        }
+      } else if (i === typed.length) {
+        char.classList.add('current');
+      }
+    });
+
+    updateTypingStats();
+
+    if (typed === currentParagraph) {
+      typingGameActive = false;
+      typingInput.disabled = true;
+      if (typingInterval) clearInterval(typingInterval);
+      typingStatus.textContent = '🎉 Perfect! You completed the text!';
+    }
+  });
+
+  typingStartBtn.addEventListener('click', startTypingTest);
 
 }); // End of DOMContentLoaded
