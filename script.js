@@ -32,32 +32,42 @@ drawer.querySelectorAll('a').forEach(link => {
 });
 
 // Projects data - Edit this array to add your projects
-// Each project has: title, description, and reportUrl (link to your PDF)
+// Each project has: title, description, reportUrl, category, and icon
 const projects = [
   {
     title: "Klein Tunneling in Graphene",
     description: "Study of the relativistic quantum mechanical phenomenon where electrons in graphene can pass through potential barriers with 100% transmission probability, demonstrating the unique Dirac fermion behavior in 2D materials.",
-    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/Klein%20Tunneling%20in%20Graphene.pdf"
+    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/Klein%20Tunneling%20in%20Graphene.pdf",
+    category: "Physics",
+    icon: "⚛️"
   },
   {
     title: "Orbital Hall Effect",
     description: "Investigation of the orbital Hall effect - a transport phenomenon where an orbital angular momentum current flows perpendicular to an applied electric field, exploring its role in spintronics and topological materials.",
-    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/Orbital%20Hall%20Effect.pdf"
+    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/Orbital%20Hall%20Effect.pdf",
+    category: "Physics",
+    icon: "🌀"
   },
   {
     title: "Supervised Learning Project (SLP)",
     description: "Comprehensive machine learning project implementing and analyzing various supervised learning algorithms for classification and regression tasks with detailed performance evaluation and model comparison.",
-    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/SLP_final_report.pdf"
+    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/SLP_final_report.pdf",
+    category: "Machine Learning",
+    icon: "🤖"
   },
   {
     title: "AIDS Data Analysis Project",
     description: "Data science project involving statistical analysis and predictive modeling on AIDS-related datasets, utilizing machine learning techniques for pattern recognition and insights extraction.",
-    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/AIDS%20PROJECT.pdf"
+    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/AIDS%20PROJECT.pdf",
+    category: "Data Science",
+    icon: "📊"
   },
   {
     title: "C++ Programming Project",
     description: "Object-oriented programming project in C++ demonstrating core concepts including classes, inheritance, polymorphism, and efficient algorithm implementation.",
-    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/CPP-23b1825.pdf"
+    reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/CPP-23b1825.pdf",
+    category: "Programming",
+    icon: "💻"
   }
 ];
 
@@ -67,17 +77,26 @@ const projectsList = document.getElementById('projectsList');
 function renderProjects() {
   projectsList.innerHTML = '';
   
-  projects.forEach(project => {
+  projects.forEach((project, index) => {
     const card = document.createElement('div');
     card.className = 'project-card';
+    card.style.animationDelay = `${index * 0.1}s`;
     card.innerHTML = `
-      <div class="project-info">
-        <h3>${project.title}</h3>
+      <div class="project-icon">${project.icon}</div>
+      <div class="project-content">
+        <div class="project-header">
+          <h3>${project.title}</h3>
+          <span class="project-tag">${project.category}</span>
+        </div>
         <p>${project.description}</p>
+        <a href="${project.reportUrl}" target="_blank" rel="noopener" class="project-link">
+          <span>View Report</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </a>
       </div>
-      <a href="${project.reportUrl}" target="_blank" rel="noopener" class="project-link">
-        View Report →
-      </a>
+      <div class="project-glow"></div>
     `;
     projectsList.appendChild(card);
   });
