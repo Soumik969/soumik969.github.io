@@ -39,6 +39,7 @@
       <a href="#skills">Skills</a>
       <a href="#games">Games</a>
       <a href="#projects">Projects</a>
+      <a href="#resume">Resume</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="header-actions">
@@ -56,6 +57,7 @@
       <a href="#skills">Skills</a>
       <a href="#games">Fun Games</a>
       <a href="#projects">Projects</a>
+      <a href="#resume">Resume</a>
       <a href="#contact">Contact</a>
     </nav>
   </aside>
@@ -230,15 +232,15 @@
       <div class="game-panel" id="tictactoe-game">
         <div class="game-container">
           <div class="ttt-board" id="tttBoard">
-            <div class="ttt-cell" data-index="0"></div>
-            <div class="ttt-cell" data-index="1"></div>
-            <div class="ttt-cell" data-index="2"></div>
-            <div class="ttt-cell" data-index="3"></div>
-            <div class="ttt-cell" data-index="4"></div>
-            <div class="ttt-cell" data-index="5"></div>
-            <div class="ttt-cell" data-index="6"></div>
-            <div class="ttt-cell" data-index="7"></div>
-            <div class="ttt-cell" data-index="8"></div>
+            <button class="ttt-cell" data-index="0"></button>
+            <button class="ttt-cell" data-index="1"></button>
+            <button class="ttt-cell" data-index="2"></button>
+            <button class="ttt-cell" data-index="3"></button>
+            <button class="ttt-cell" data-index="4"></button>
+            <button class="ttt-cell" data-index="5"></button>
+            <button class="ttt-cell" data-index="6"></button>
+            <button class="ttt-cell" data-index="7"></button>
+            <button class="ttt-cell" data-index="8"></button>
           </div>
           <div class="game-controls">
             <div class="game-status" id="tttStatus">You are X. Your turn!</div>
@@ -262,7 +264,7 @@
       <!-- Typing Test Game -->
       <div class="game-panel" id="typing-game">
         <div class="game-container typing-container">
-          <div class="typing-text" id="typingText"></div>
+          <div class="typing-text" id="typingText">Click START to begin the typing test!</div>
           <input type="text" class="typing-input" id="typingInput" placeholder="Start typing here..." disabled>
           <div class="typing-stats">
             <div class="typing-stat">
@@ -296,6 +298,38 @@
       </div>
     </section>
 
+    <section class="section" id="resume">
+      <div class="section-header">
+        <h2>Resume / CV</h2>
+        <p>View or download my curriculum vitae</p>
+      </div>
+      <div class="resume-container">
+        <div class="resume-card">
+          <div class="resume-icon">📄</div>
+          <h3>Curriculum Vitae</h3>
+          <p>My complete academic and professional background, including education, research experience, projects, and skills.</p>
+          <div class="resume-actions">
+            <a href="https://github.com/Soumik969/All_at_once/blob/main/Long_2page%20(1).pdf" target="_blank" rel="noopener" class="btn primary">
+              <span>View CV</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <a href="https://raw.githubusercontent.com/Soumik969/All_at_once/main/Long_2page%20(1).pdf" download class="btn outline">
+              <span>Download PDF</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="contact">
       <div class="section-header">
         <h2>Contact</h2>
@@ -311,16 +345,6 @@
           <span class="contact-icon">⌘</span>
           <span class="contact-label">GitHub</span>
           <span class="contact-value">github.com/Soumik969</span>
-        </a>
-        <a href="https://linkedin.com/in/" target="_blank" rel="noopener" class="contact-card">
-          <span class="contact-icon">in</span>
-          <span class="contact-label">LinkedIn</span>
-          <span class="contact-value">Connect with me</span>
-        </a>
-        <a href="#" class="contact-card" id="resumeCard">
-          <span class="contact-icon">📄</span>
-          <span class="contact-label">Resume</span>
-          <span class="contact-value">Download CV</span>
         </a>
       </div>
     </section>
