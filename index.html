@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soumik Sahoo — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="gradient-bg" aria-hidden="true"></div>
+
+  <header class="header">
+    <a href="#" class="logo">Portfolio</a>
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#games">Games</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="icon-sun">☀</span>
+        <span class="icon-moon">☾</span>
+      </button>
+      <button class="kebab-btn" id="kebabBtn" aria-label="Open menu">⋮</button>
+    </div>
+  </header>
+
+  <aside class="drawer" id="drawer">
+    <nav class="drawer-nav">
+      <a href="#about">About</a>
+      <a href="#games">Fun Games</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section class="hero" id="about">
+      <div class="hero-content">
+        <div class="hero-photo">
+          <div class="photo-frame" id="photoContainer">
+            <span class="photo-placeholder">Your Photo</span>
+            <!-- Replace the span above with: <img src="your-photo.jpg" alt="Your Name"> -->
+          </div>
+        </div>
+        <div class="hero-text">
+          <p class="greeting">Hello, I'm</p>
+          <h1 class="name">Soumik Sahoo</h1>
+          <p class="title">IIT Bombay</p>
+          <p class="statement">
+            I am passionate about bridging theoretical physics and computational methods. 
+            My work focuses on quantum transport, many-body systems, and applying machine learning 
+            to solve complex physical problems. I believe in making abstract concepts accessible 
+            through simulation and visualization.
+          </p>
+          <div class="hero-links">
+            <a href="#projects" class="btn primary">View Projects</a>
+            <a href="#contact" class="btn outline">Get in Touch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="games">
+      <div class="section-header">
+        <h2>Fun Games</h2>
+        <p>Take a break and play a quick game</p>
+      </div>
+      
+      <!-- Game Tabs -->
+      <div class="game-tabs">
+        <button class="game-tab active" data-game="flappy">Flappy Bird</button>
+        <button class="game-tab" data-game="snake">Snake</button>
+      </div>
+      
+      <!-- Flappy Bird Game -->
+      <div class="game-panel active" id="flappy-game">
+        <div class="game-container">
+          <canvas id="gameCanvas" width="400" height="500"></canvas>
+          <div class="game-controls">
+            <div class="game-score">Score: <span id="score">0</span></div>
+            <div class="game-status" id="gameStatus">Click START to begin!</div>
+            <button class="btn primary" id="startBtn">Start Game</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Snake Game -->
+      <div class="game-panel" id="snake-game">
+        <div class="game-container">
+          <canvas id="snakeCanvas" width="400" height="400"></canvas>
+          <div class="game-controls">
+            <div class="game-score">Score: <span id="snakeScore">0</span></div>
+            <div class="game-status" id="snakeStatus">Click START to begin!</div>
+            <button class="btn primary" id="snakeStartBtn">Start Game</button>
+          </div>
+          <div class="game-instructions">
+            <span>Use Arrow Keys to move</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-header">
+        <h2>Projects</h2>
+        <p>A selection of my academic work and research</p>
+      </div>
+      <div class="projects-list" id="projectsList">
+        <!-- Projects rendered by JS -->
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="section-header">
+        <h2>Contact</h2>
+        <p>Feel free to reach out for collaborations or questions</p>
+      </div>
+      <div class="contact-grid">
+        <a href="mailto:soumik.sahoo@iitb.ac.in" class="contact-card">
+          <span class="contact-icon">✉</span>
+          <span class="contact-label">Email</span>
+          <span class="contact-value">soumik.sahoo@iitb.ac.in</span>
+        </a>
+        <a href="https://github.com/Soumik969" target="_blank" rel="noopener" class="contact-card">
+          <span class="contact-icon">⌘</span>
+          <span class="contact-label">GitHub</span>
+          <span class="contact-value">github.com/Soumik969</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Soumik Sahoo. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
