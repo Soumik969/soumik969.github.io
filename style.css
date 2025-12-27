@@ -42,6 +42,12 @@ body {
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .gradient-bg {
@@ -358,21 +364,86 @@ main {
   font-size: 16px;
 }
 
+/* Skills Section */
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.skills-category {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.skills-category:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.skills-category-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  transition: all 0.2s ease;
+}
+
+.skill-item:hover {
+  background: rgba(59, 130, 246, 0.15);
+  transform: scale(1.05);
+}
+
+.skill-icon {
+  font-size: 16px;
+}
+
+.skill-name {
+  white-space: nowrap;
+}
+
 /* Game Tabs */
 .game-tabs {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.75rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
 .game-tab {
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: var(--text);
   font-weight: 500;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -446,6 +517,172 @@ main {
   color: var(--text-muted);
   text-align: center;
   margin-top: 0.5rem;
+}
+
+/* Tic Tac Toe */
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 8px;
+}
+
+.ttt-cell {
+  width: 100px;
+  height: 100px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text);
+}
+
+.ttt-cell:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: var(--accent);
+}
+
+.ttt-cell.x {
+  color: #3b82f6;
+}
+
+.ttt-cell.o {
+  color: #ef4444;
+}
+
+.ttt-cell.winner {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: #22c55e;
+}
+
+/* Memory Game */
+.memory-board {
+  display: grid;
+  grid-template-columns: repeat(4, 70px);
+  grid-template-rows: repeat(4, 70px);
+  gap: 10px;
+}
+
+.memory-card {
+  width: 70px;
+  height: 70px;
+  background: var(--accent);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.memory-card.flipped,
+.memory-card.matched {
+  background: var(--bg);
+  border: 2px solid var(--border);
+}
+
+.memory-card.matched {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: #22c55e;
+  cursor: default;
+}
+
+.memory-card:not(.flipped):not(.matched):hover {
+  transform: scale(1.05);
+}
+
+.memory-card-content {
+  display: none;
+}
+
+.memory-card.flipped .memory-card-content,
+.memory-card.matched .memory-card-content {
+  display: block;
+}
+
+/* Typing Test */
+.typing-container {
+  max-width: 600px;
+}
+
+.typing-text {
+  font-size: 18px;
+  line-height: 1.8;
+  padding: 20px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  min-height: 120px;
+  text-align: left;
+}
+
+.typing-text .correct {
+  color: #22c55e;
+}
+
+.typing-text .incorrect {
+  color: #ef4444;
+  text-decoration: underline;
+}
+
+.typing-text .current {
+  background: rgba(59, 130, 246, 0.3);
+  border-bottom: 2px solid var(--accent);
+}
+
+.typing-input {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.typing-input:focus {
+  border-color: var(--accent);
+}
+
+.typing-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.typing-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+.typing-stat {
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* Projects */
@@ -622,7 +859,7 @@ main {
   box-shadow: var(--shadow-sm);
   transition: all 0.2s;
   text-align: center;
-  min-width: 220px;
+  min-width: 200px;
 }
 
 .contact-card:hover {
@@ -663,6 +900,36 @@ main {
   border-top: 1px solid var(--border);
   color: var(--text-muted);
   font-size: 14px;
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+  z-index: 99;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background: var(--accent-hover);
+  transform: translateY(-3px);
 }
 
 /* Responsive */
@@ -715,5 +982,55 @@ main {
     max-width: 400px;
     height: auto;
     aspect-ratio: 4/5;
+  }
+  
+  .game-tabs {
+    gap: 0.5rem;
+  }
+  
+  .game-tab {
+    padding: 0.5rem 0.75rem;
+    font-size: 12px;
+  }
+  
+  .ttt-board {
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(3, 80px);
+  }
+  
+  .ttt-cell {
+    width: 80px;
+    height: 80px;
+    font-size: 36px;
+  }
+  
+  .memory-board {
+    grid-template-columns: repeat(4, 60px);
+    grid-template-rows: repeat(4, 60px);
+  }
+  
+  .memory-card {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+  
+  .typing-text {
+    font-size: 16px;
+  }
+  
+  .typing-stats {
+    gap: 20px;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+  }
+  
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
   }
 }
