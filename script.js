@@ -166,23 +166,154 @@ function drawFluidBackground() {
     blob.draw(fluidCtx);
   }
   
+  // Draw glitter particles
+  updateAndDrawGlitters();
+  
   // Reset blend mode
   fluidCtx.globalCompositeOperation = 'source-over';
   
   requestAnimationFrame(drawFluidBackground);
 }
 
-// Mouse tracking
+// ========== GLITTER PARTICLE SYSTEM ==========
+const glitters = [];
+const MAX_GLITTERS = 50;
+let lastMouseX = 0;
+let lastMouseY = 0;
+
+class Glitter {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 4 + 2;
+    this.speedX = (Math.random() - 0.5) * 2;
+    this.speedY = (Math.random() - 0.5) * 2 - 1; // Slight upward bias
+    this.life = 1.0;
+    this.decay = 0.015 + Math.random() * 0.02;
+    this.rotation = Math.random() * Math.PI * 2;
+    this.rotationSpeed = (Math.random() - 0.5) * 0.2;
+    
+    // Random glitter color
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const colors = isDark 
+      ? ['#60a5fa', '#a78bfa', '#f472b6', '#34d399', '#fbbf24', '#ffffff']
+      : ['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#6366f1'];
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.speedY += 0.02; // Gravity
+    this.speedX *= 0.99; // Air resistance
+    this.life -= this.decay;
+    this.rotation += this.rotationSpeed;
+    this.size *= 0.98;
+  }
+
+  draw(ctx) {
+    if (this.life <= 0) return;
+    
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
+    ctx.globalAlpha = this.life;
+    
+    // Draw a 4-pointed star/sparkle
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    
+    const spikes = 4;
+    const outerRadius = this.size;
+    const innerRadius = this.size * 0.4;
+    
+    for (let i = 0; i < spikes * 2; i++) {
+      const radius = i % 2 === 0 ? outerRadius : innerRadius;
+      const angle = (i * Math.PI) / spikes;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+      
+      if (i === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    }
+    
+    ctx.closePath();
+    ctx.fill();
+    
+    // Add glow effect
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = this.size * 2;
+    ctx.fill();
+    
+    ctx.restore();
+  }
+}
+
+function spawnGlitters(x, y, count) {
+  for (let i = 0; i < count; i++) {
+    if (glitters.length < MAX_GLITTERS) {
+      glitters.push(new Glitter(
+        x + (Math.random() - 0.5) * 20,
+        y + (Math.random() - 0.5) * 20
+      ));
+    }
+  }
+}
+
+function updateAndDrawGlitters() {
+  // Update and draw existing glitters
+  for (let i = glitters.length - 1; i >= 0; i--) {
+    const glitter = glitters[i];
+    glitter.update();
+    glitter.draw(fluidCtx);
+    
+    // Remove dead glitters
+    if (glitter.life <= 0 || glitter.size < 0.5) {
+      glitters.splice(i, 1);
+    }
+  }
+}
+
+// Mouse tracking with glitter spawning
 document.addEventListener('mousemove', (e) => {
+  const dx = e.clientX - lastMouseX;
+  const dy = e.clientY - lastMouseY;
+  const speed = Math.sqrt(dx * dx + dy * dy);
+  
   mouseX = e.clientX;
   mouseY = e.clientY;
+  
+  // Spawn glitters based on mouse speed
+  if (speed > 5) {
+    const count = Math.min(Math.floor(speed / 10), 3);
+    spawnGlitters(e.clientX, e.clientY, count);
+  }
+  
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
 });
 
-// Touch support
+// Touch support with glitter spawning
 document.addEventListener('touchmove', (e) => {
   if (e.touches.length > 0) {
-    mouseX = e.touches[0].clientX;
-    mouseY = e.touches[0].clientY;
+    const touch = e.touches[0];
+    const dx = touch.clientX - lastMouseX;
+    const dy = touch.clientY - lastMouseY;
+    const speed = Math.sqrt(dx * dx + dy * dy);
+    
+    mouseX = touch.clientX;
+    mouseY = touch.clientY;
+    
+    if (speed > 5) {
+      const count = Math.min(Math.floor(speed / 10), 3);
+      spawnGlitters(touch.clientX, touch.clientY, count);
+    }
+    
+    lastMouseX = touch.clientX;
+    lastMouseY = touch.clientY;
   }
 });
 
