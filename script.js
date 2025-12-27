@@ -3,50 +3,69 @@ const fluidCanvas = document.getElementById('fluidBg');
 const fluidCtx = fluidCanvas.getContext('2d');
 
 let fluidWidth, fluidHeight;
-let mouseX = 0, mouseY = 0;
-let targetX = 0, targetY = 0;
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let targetX = mouseX;
+let targetY = mouseY;
 
-// Blob class for fluid effect
+// Metaball/Blob class for fluid effect
 class Blob {
   constructor(x, y, radius, color, speed) {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.color = color;
+    this.baseColor = color;
     this.speed = speed;
     this.angle = Math.random() * Math.PI * 2;
     this.vx = Math.cos(this.angle) * speed;
     this.vy = Math.sin(this.angle) * speed;
     this.originalRadius = radius;
-    this.pulseSpeed = 0.02 + Math.random() * 0.02;
+    this.pulseSpeed = 0.015 + Math.random() * 0.015;
     this.pulsePhase = Math.random() * Math.PI * 2;
+    this.wobbleX = Math.random() * Math.PI * 2;
+    this.wobbleY = Math.random() * Math.PI * 2;
   }
 
-  update(mouseX, mouseY) {
-    // Smooth movement
-    this.x += this.vx;
-    this.y += this.vy;
+  update(targetX, targetY) {
+    // Wobble motion
+    this.wobbleX += 0.02;
+    this.wobbleY += 0.025;
+    
+    // Base movement with wobble
+    this.x += this.vx + Math.sin(this.wobbleX) * 0.5;
+    this.y += this.vy + Math.cos(this.wobbleY) * 0.5;
 
-    // Bounce off edges with smooth transition
-    if (this.x < -this.radius) this.x = fluidWidth + this.radius;
-    if (this.x > fluidWidth + this.radius) this.x = -this.radius;
-    if (this.y < -this.radius) this.y = fluidHeight + this.radius;
-    if (this.y > fluidHeight + this.radius) this.y = -this.radius;
+    // Wrap around edges
+    if (this.x < -this.radius * 2) this.x = fluidWidth + this.radius;
+    if (this.x > fluidWidth + this.radius * 2) this.x = -this.radius;
+    if (this.y < -this.radius * 2) this.y = fluidHeight + this.radius;
+    if (this.y > fluidHeight + this.radius * 2) this.y = -this.radius;
 
-    // Mouse interaction - gentle attraction
-    const dx = mouseX - this.x;
-    const dy = mouseY - this.y;
+    // Mouse interaction - blobs move away from cursor (repel) or attract
+    const dx = targetX - this.x;
+    const dy = targetY - this.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
     
-    if (dist < 300) {
-      const force = (300 - dist) / 300 * 0.02;
-      this.vx += dx * force * 0.01;
-      this.vy += dy * force * 0.01;
+    if (dist < 400 && dist > 0) {
+      const force = (400 - dist) / 400;
+      // Push blobs away from cursor for fluid ripple effect
+      this.vx -= (dx / dist) * force * 0.3;
+      this.vy -= (dy / dist) * force * 0.3;
     }
 
-    // Limit velocity
-    const maxSpeed = this.speed * 1.5;
+    // Apply friction
+    this.vx *= 0.98;
+    this.vy *= 0.98;
+
+    // Add some base velocity to keep moving
     const currentSpeed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+    if (currentSpeed < this.speed * 0.5) {
+      this.vx += Math.cos(this.angle) * 0.05;
+      this.vy += Math.sin(this.angle) * 0.05;
+    }
+
+    // Limit max velocity
+    const maxSpeed = this.speed * 3;
     if (currentSpeed > maxSpeed) {
       this.vx = (this.vx / currentSpeed) * maxSpeed;
       this.vy = (this.vy / currentSpeed) * maxSpeed;
@@ -54,15 +73,17 @@ class Blob {
 
     // Pulsing radius
     this.pulsePhase += this.pulseSpeed;
-    this.radius = this.originalRadius + Math.sin(this.pulsePhase) * (this.originalRadius * 0.15);
+    this.radius = this.originalRadius + Math.sin(this.pulsePhase) * (this.originalRadius * 0.2);
   }
 
   draw(ctx) {
+    // Draw main blob with gradient
     const gradient = ctx.createRadialGradient(
       this.x, this.y, 0,
       this.x, this.y, this.radius
     );
-    gradient.addColorStop(0, this.color);
+    gradient.addColorStop(0, this.baseColor.replace(')', ', 0.8)').replace('rgba', 'rgba').replace('rgb', 'rgba'));
+    gradient.addColorStop(0.4, this.baseColor);
     gradient.addColorStop(1, 'transparent');
     
     ctx.beginPath();
@@ -78,21 +99,21 @@ function getFluidColors() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   if (isDark) {
     return [
-      'rgba(59, 130, 246, 0.25)',   // Blue
-      'rgba(139, 92, 246, 0.2)',    // Purple
-      'rgba(236, 72, 153, 0.15)',   // Pink
-      'rgba(14, 165, 233, 0.2)',    // Cyan
-      'rgba(168, 85, 247, 0.18)',   // Violet
-      'rgba(99, 102, 241, 0.22)',   // Indigo
+      'rgba(59, 130, 246, 0.5)',    // Blue - more visible
+      'rgba(139, 92, 246, 0.45)',   // Purple
+      'rgba(236, 72, 153, 0.4)',    // Pink
+      'rgba(14, 165, 233, 0.45)',   // Cyan
+      'rgba(168, 85, 247, 0.4)',    // Violet
+      'rgba(34, 197, 94, 0.35)',    // Green
     ];
   } else {
     return [
-      'rgba(59, 130, 246, 0.15)',   // Blue
-      'rgba(139, 92, 246, 0.12)',   // Purple
-      'rgba(236, 72, 153, 0.1)',    // Pink
-      'rgba(14, 165, 233, 0.12)',   // Cyan
-      'rgba(168, 85, 247, 0.1)',    // Violet
-      'rgba(99, 102, 241, 0.12)',   // Indigo
+      'rgba(59, 130, 246, 0.35)',   // Blue
+      'rgba(139, 92, 246, 0.3)',    // Purple
+      'rgba(236, 72, 153, 0.28)',   // Pink
+      'rgba(14, 165, 233, 0.32)',   // Cyan
+      'rgba(168, 85, 247, 0.28)',   // Violet
+      'rgba(34, 197, 94, 0.25)',    // Green
     ];
   }
 }
@@ -100,14 +121,15 @@ function getFluidColors() {
 function initFluidBlobs() {
   blobs = [];
   const colors = getFluidColors();
-  const blobCount = Math.min(12, Math.floor((fluidWidth * fluidHeight) / 80000));
+  // More blobs for better effect
+  const blobCount = 8;
   
   for (let i = 0; i < blobCount; i++) {
-    const radius = 150 + Math.random() * 250;
+    const radius = 180 + Math.random() * 220;
     const x = Math.random() * fluidWidth;
     const y = Math.random() * fluidHeight;
     const color = colors[i % colors.length];
-    const speed = 0.3 + Math.random() * 0.4;
+    const speed = 0.5 + Math.random() * 0.8;
     blobs.push(new Blob(x, y, radius, color, speed));
   }
 }
@@ -125,15 +147,18 @@ function drawFluidBackground() {
   
   // Clear with background color
   if (isDark) {
-    fluidCtx.fillStyle = '#0a0a12';
+    fluidCtx.fillStyle = '#0a0a14';
   } else {
-    fluidCtx.fillStyle = '#f8fafc';
+    fluidCtx.fillStyle = '#f0f4ff';
   }
   fluidCtx.fillRect(0, 0, fluidWidth, fluidHeight);
   
   // Smooth mouse following
-  targetX += (mouseX - targetX) * 0.05;
-  targetY += (mouseY - targetY) * 0.05;
+  targetX += (mouseX - targetX) * 0.08;
+  targetY += (mouseY - targetY) * 0.08;
+  
+  // Enable blend mode for better blob mixing
+  fluidCtx.globalCompositeOperation = 'lighter';
   
   // Update and draw blobs
   for (const blob of blobs) {
@@ -141,12 +166,8 @@ function drawFluidBackground() {
     blob.draw(fluidCtx);
   }
   
-  // Add subtle noise/grain overlay for texture
-  if (isDark) {
-    fluidCtx.fillStyle = 'rgba(255, 255, 255, 0.01)';
-  } else {
-    fluidCtx.fillStyle = 'rgba(0, 0, 0, 0.01)';
-  }
+  // Reset blend mode
+  fluidCtx.globalCompositeOperation = 'source-over';
   
   requestAnimationFrame(drawFluidBackground);
 }
