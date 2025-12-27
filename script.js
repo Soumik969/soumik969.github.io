@@ -8,83 +8,75 @@ let mouseY = window.innerHeight / 2;
 let targetX = mouseX;
 let targetY = mouseY;
 
-// Metaball/Blob class for fluid effect
+// Simpler, more visible blob class
 class Blob {
-  constructor(x, y, radius, color, speed) {
+  constructor(x, y, radius, hue, speed) {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.baseColor = color;
+    this.hue = hue;
     this.speed = speed;
     this.angle = Math.random() * Math.PI * 2;
     this.vx = Math.cos(this.angle) * speed;
     this.vy = Math.sin(this.angle) * speed;
     this.originalRadius = radius;
-    this.pulseSpeed = 0.015 + Math.random() * 0.015;
     this.pulsePhase = Math.random() * Math.PI * 2;
-    this.wobbleX = Math.random() * Math.PI * 2;
-    this.wobbleY = Math.random() * Math.PI * 2;
   }
 
   update(targetX, targetY) {
-    // Wobble motion
-    this.wobbleX += 0.02;
-    this.wobbleY += 0.025;
+    // Wobble
+    this.pulsePhase += 0.02;
+    this.radius = this.originalRadius + Math.sin(this.pulsePhase) * 30;
     
-    // Base movement with wobble
-    this.x += this.vx + Math.sin(this.wobbleX) * 0.5;
-    this.y += this.vy + Math.cos(this.wobbleY) * 0.5;
+    // Movement
+    this.x += this.vx;
+    this.y += this.vy;
 
-    // Wrap around edges
-    if (this.x < -this.radius * 2) this.x = fluidWidth + this.radius;
-    if (this.x > fluidWidth + this.radius * 2) this.x = -this.radius;
-    if (this.y < -this.radius * 2) this.y = fluidHeight + this.radius;
-    if (this.y > fluidHeight + this.radius * 2) this.y = -this.radius;
+    // Wrap around
+    if (this.x < -this.radius) this.x = fluidWidth + this.radius;
+    if (this.x > fluidWidth + this.radius) this.x = -this.radius;
+    if (this.y < -this.radius) this.y = fluidHeight + this.radius;
+    if (this.y > fluidHeight + this.radius) this.y = -this.radius;
 
-    // Mouse interaction - blobs move away from cursor (repel) or attract
-    const dx = targetX - this.x;
-    const dy = targetY - this.y;
+    // Mouse repulsion
+    const dx = this.x - targetX;
+    const dy = this.y - targetY;
     const dist = Math.sqrt(dx * dx + dy * dy);
     
-    if (dist < 400 && dist > 0) {
-      const force = (400 - dist) / 400;
-      // Push blobs away from cursor for fluid ripple effect
-      this.vx -= (dx / dist) * force * 0.3;
-      this.vy -= (dy / dist) * force * 0.3;
+    if (dist < 350 && dist > 0) {
+      const force = (350 - dist) / 350;
+      this.vx += (dx / dist) * force * 0.8;
+      this.vy += (dy / dist) * force * 0.8;
     }
 
-    // Apply friction
+    // Friction and speed limit
     this.vx *= 0.98;
     this.vy *= 0.98;
-
-    // Add some base velocity to keep moving
+    
     const currentSpeed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-    if (currentSpeed < this.speed * 0.5) {
-      this.vx += Math.cos(this.angle) * 0.05;
-      this.vy += Math.sin(this.angle) * 0.05;
+    if (currentSpeed < 0.5) {
+      this.vx += Math.cos(this.angle) * 0.1;
+      this.vy += Math.sin(this.angle) * 0.1;
     }
-
-    // Limit max velocity
-    const maxSpeed = this.speed * 3;
-    if (currentSpeed > maxSpeed) {
-      this.vx = (this.vx / currentSpeed) * maxSpeed;
-      this.vy = (this.vy / currentSpeed) * maxSpeed;
+    if (currentSpeed > 4) {
+      this.vx *= 0.9;
+      this.vy *= 0.9;
     }
-
-    // Pulsing radius
-    this.pulsePhase += this.pulseSpeed;
-    this.radius = this.originalRadius + Math.sin(this.pulsePhase) * (this.originalRadius * 0.2);
   }
 
-  draw(ctx) {
-    // Draw main blob with gradient
+  draw(ctx, isDark) {
+    const alpha = isDark ? 0.6 : 0.4;
+    const saturation = isDark ? '70%' : '60%';
+    const lightness = isDark ? '60%' : '65%';
+    
     const gradient = ctx.createRadialGradient(
       this.x, this.y, 0,
       this.x, this.y, this.radius
     );
-    gradient.addColorStop(0, this.baseColor.replace(')', ', 0.8)').replace('rgba', 'rgba').replace('rgb', 'rgba'));
-    gradient.addColorStop(0.4, this.baseColor);
-    gradient.addColorStop(1, 'transparent');
+    
+    gradient.addColorStop(0, `hsla(${this.hue}, ${saturation}, ${lightness}, ${alpha})`);
+    gradient.addColorStop(0.5, `hsla(${this.hue}, ${saturation}, ${lightness}, ${alpha * 0.5})`);
+    gradient.addColorStop(1, `hsla(${this.hue}, ${saturation}, ${lightness}, 0)`);
     
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
@@ -95,42 +87,18 @@ class Blob {
 
 let blobs = [];
 
-function getFluidColors() {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  if (isDark) {
-    return [
-      'rgba(59, 130, 246, 0.5)',    // Blue - more visible
-      'rgba(139, 92, 246, 0.45)',   // Purple
-      'rgba(236, 72, 153, 0.4)',    // Pink
-      'rgba(14, 165, 233, 0.45)',   // Cyan
-      'rgba(168, 85, 247, 0.4)',    // Violet
-      'rgba(34, 197, 94, 0.35)',    // Green
-    ];
-  } else {
-    return [
-      'rgba(59, 130, 246, 0.35)',   // Blue
-      'rgba(139, 92, 246, 0.3)',    // Purple
-      'rgba(236, 72, 153, 0.28)',   // Pink
-      'rgba(14, 165, 233, 0.32)',   // Cyan
-      'rgba(168, 85, 247, 0.28)',   // Violet
-      'rgba(34, 197, 94, 0.25)',    // Green
-    ];
-  }
-}
-
 function initFluidBlobs() {
   blobs = [];
-  const colors = getFluidColors();
-  // More blobs for better effect
-  const blobCount = 8;
+  // Different hues: blue, purple, pink, cyan, green, orange
+  const hues = [210, 260, 320, 180, 150, 30];
   
-  for (let i = 0; i < blobCount; i++) {
-    const radius = 180 + Math.random() * 220;
+  for (let i = 0; i < 8; i++) {
+    const radius = 200 + Math.random() * 150;
     const x = Math.random() * fluidWidth;
     const y = Math.random() * fluidHeight;
-    const color = colors[i % colors.length];
-    const speed = 0.5 + Math.random() * 0.8;
-    blobs.push(new Blob(x, y, radius, color, speed));
+    const hue = hues[i % hues.length];
+    const speed = 0.5 + Math.random() * 0.5;
+    blobs.push(new Blob(x, y, radius, hue, speed));
   }
 }
 
@@ -145,35 +113,34 @@ function resizeFluidCanvas() {
 function drawFluidBackground() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   
-  // Clear with background color
-  if (isDark) {
-    fluidCtx.fillStyle = '#0a0a14';
-  } else {
-    fluidCtx.fillStyle = '#f0f4ff';
-  }
+  // Clear canvas with background
+  fluidCtx.fillStyle = isDark ? '#0a0a15' : '#f0f4ff';
   fluidCtx.fillRect(0, 0, fluidWidth, fluidHeight);
   
-  // Smooth mouse following
-  targetX += (mouseX - targetX) * 0.08;
-  targetY += (mouseY - targetY) * 0.08;
+  // Smooth mouse follow
+  targetX += (mouseX - targetX) * 0.1;
+  targetY += (mouseY - targetY) * 0.1;
   
-  // Enable blend mode for better blob mixing
-  fluidCtx.globalCompositeOperation = 'lighter';
+  // Draw blobs with screen blend for nice mixing
+  fluidCtx.globalCompositeOperation = isDark ? 'screen' : 'multiply';
   
-  // Update and draw blobs
   for (const blob of blobs) {
     blob.update(targetX, targetY);
-    blob.draw(fluidCtx);
+    blob.draw(fluidCtx, isDark);
   }
   
-  // Draw glitter particles
-  updateAndDrawGlitters();
-  
-  // Reset blend mode
+  // Draw glitters on top
   fluidCtx.globalCompositeOperation = 'source-over';
+  updateAndDrawGlitters(isDark);
   
   requestAnimationFrame(drawFluidBackground);
 }
+
+// Initialize on load
+window.addEventListener('resize', resizeFluidCanvas);
+resizeFluidCanvas();
+requestAnimationFrame(drawFluidBackground);
+
 
 // ========== GLITTER PARTICLE SYSTEM ==========
 const glitters = [];
@@ -182,19 +149,17 @@ let lastMouseX = 0;
 let lastMouseY = 0;
 
 class Glitter {
-  constructor(x, y) {
+  constructor(x, y, isDark) {
     this.x = x;
     this.y = y;
     this.size = Math.random() * 4 + 2;
-    this.speedX = (Math.random() - 0.5) * 2;
-    this.speedY = (Math.random() - 0.5) * 2 - 1; // Slight upward bias
+    this.speedX = (Math.random() - 0.5) * 3;
+    this.speedY = (Math.random() - 0.5) * 3 - 1;
     this.life = 1.0;
-    this.decay = 0.015 + Math.random() * 0.02;
+    this.decay = 0.02 + Math.random() * 0.02;
     this.rotation = Math.random() * Math.PI * 2;
-    this.rotationSpeed = (Math.random() - 0.5) * 0.2;
+    this.rotationSpeed = (Math.random() - 0.5) * 0.3;
     
-    // Random glitter color
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const colors = isDark 
       ? ['#60a5fa', '#a78bfa', '#f472b6', '#34d399', '#fbbf24', '#ffffff']
       : ['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#6366f1'];
@@ -204,80 +169,59 @@ class Glitter {
   update() {
     this.x += this.speedX;
     this.y += this.speedY;
-    this.speedY += 0.02; // Gravity
-    this.speedX *= 0.99; // Air resistance
+    this.speedY += 0.05;
     this.life -= this.decay;
     this.rotation += this.rotationSpeed;
-    this.size *= 0.98;
   }
 
   draw(ctx) {
     if (this.life <= 0) return;
     
     ctx.save();
+    ctx.globalAlpha = this.life;
     ctx.translate(this.x, this.y);
     ctx.rotate(this.rotation);
-    ctx.globalAlpha = this.life;
     
-    // Draw a 4-pointed star/sparkle
+    // Draw sparkle star
     ctx.fillStyle = this.color;
-    ctx.beginPath();
-    
-    const spikes = 4;
-    const outerRadius = this.size;
-    const innerRadius = this.size * 0.4;
-    
-    for (let i = 0; i < spikes * 2; i++) {
-      const radius = i % 2 === 0 ? outerRadius : innerRadius;
-      const angle = (i * Math.PI) / spikes;
-      const x = Math.cos(angle) * radius;
-      const y = Math.sin(angle) * radius;
-      
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    }
-    
-    ctx.closePath();
-    ctx.fill();
-    
-    // Add glow effect
     ctx.shadowColor = this.color;
-    ctx.shadowBlur = this.size * 2;
+    ctx.shadowBlur = 10;
+    
+    ctx.beginPath();
+    for (let i = 0; i < 4; i++) {
+      const angle = (i * Math.PI) / 2;
+      ctx.lineTo(Math.cos(angle) * this.size, Math.sin(angle) * this.size);
+      ctx.lineTo(Math.cos(angle + Math.PI/4) * this.size * 0.4, Math.sin(angle + Math.PI/4) * this.size * 0.4);
+    }
+    ctx.closePath();
     ctx.fill();
     
     ctx.restore();
   }
 }
 
-function spawnGlitters(x, y, count) {
+function spawnGlitters(x, y, count, isDark) {
   for (let i = 0; i < count; i++) {
     if (glitters.length < MAX_GLITTERS) {
       glitters.push(new Glitter(
-        x + (Math.random() - 0.5) * 20,
-        y + (Math.random() - 0.5) * 20
+        x + (Math.random() - 0.5) * 30,
+        y + (Math.random() - 0.5) * 30,
+        isDark
       ));
     }
   }
 }
 
-function updateAndDrawGlitters() {
-  // Update and draw existing glitters
+function updateAndDrawGlitters(isDark) {
   for (let i = glitters.length - 1; i >= 0; i--) {
-    const glitter = glitters[i];
-    glitter.update();
-    glitter.draw(fluidCtx);
-    
-    // Remove dead glitters
-    if (glitter.life <= 0 || glitter.size < 0.5) {
-      glitters.splice(i, 1);
-    }
+    const g = glitters[i];
+    g.update();
+    g.draw(fluidCtx);
+    if (g.life <= 0) glitters.splice(i, 1);
   }
 }
 
-// Mouse tracking with glitter spawning
+// Mouse tracking
 document.addEventListener('mousemove', (e) => {
   const dx = e.clientX - lastMouseX;
   const dy = e.clientY - lastMouseY;
@@ -286,50 +230,27 @@ document.addEventListener('mousemove', (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
   
-  // Spawn glitters based on mouse speed
-  if (speed > 5) {
-    const count = Math.min(Math.floor(speed / 10), 3);
-    spawnGlitters(e.clientX, e.clientY, count);
+  // Spawn glitters on fast movement
+  if (speed > 8) {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    spawnGlitters(e.clientX, e.clientY, Math.min(Math.floor(speed / 8), 4), isDark);
   }
   
   lastMouseX = e.clientX;
   lastMouseY = e.clientY;
 });
 
-// Touch support with glitter spawning
+// Touch support
 document.addEventListener('touchmove', (e) => {
   if (e.touches.length > 0) {
     const touch = e.touches[0];
-    const dx = touch.clientX - lastMouseX;
-    const dy = touch.clientY - lastMouseY;
-    const speed = Math.sqrt(dx * dx + dy * dy);
-    
     mouseX = touch.clientX;
     mouseY = touch.clientY;
     
-    if (speed > 5) {
-      const count = Math.min(Math.floor(speed / 10), 3);
-      spawnGlitters(touch.clientX, touch.clientY, count);
-    }
-    
-    lastMouseX = touch.clientX;
-    lastMouseY = touch.clientY;
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    spawnGlitters(touch.clientX, touch.clientY, 2, isDark);
   }
 });
-
-// Initialize
-window.addEventListener('resize', resizeFluidCanvas);
-resizeFluidCanvas();
-drawFluidBackground();
-
-// Update blob colors when theme changes
-const fluidThemeObserver = new MutationObserver(() => {
-  const colors = getFluidColors();
-  blobs.forEach((blob, i) => {
-    blob.color = colors[i % colors.length];
-  });
-});
-fluidThemeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
 
 // ========== THEME TOGGLE ==========
