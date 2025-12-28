@@ -840,6 +840,68 @@ main {
   transform: translate(3px, -3px);
 }
 
+/* Resume Section */
+.resume-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.resume-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px 50px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.resume-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+  border-color: var(--accent);
+}
+
+.resume-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.resume-card h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.resume-card p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.resume-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.resume-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resume-actions .btn svg {
+  flex-shrink: 0;
+}
+
 /* Contact */
 .contact-grid {
   display: flex;
@@ -1015,22 +1077,18 @@ main {
     font-size: 24px;
   }
   
-  .typing-text {
-    font-size: 16px;
+  .resume-card {
+    padding: 30px 25px;
+    margin: 0 15px;
   }
   
-  .typing-stats {
-    gap: 20px;
+  .resume-actions {
+    flex-direction: column;
+    align-items: center;
   }
   
-  .stat-value {
-    font-size: 24px;
-  }
-  
-  .back-to-top {
-    bottom: 20px;
-    right: 20px;
-    width: 45px;
-    height: 45px;
+  .resume-actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 }
