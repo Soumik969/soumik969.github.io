@@ -624,6 +624,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('keydown', (e) => {
+    // Don't intercept keyboard events when user is typing in an input field
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+      return;
+    }
+    
     if (e.code === 'Space') {
       e.preventDefault();
       if (gameState === 'playing') {
