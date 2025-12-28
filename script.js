@@ -57,36 +57,31 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Klein Tunneling in Graphene",
       description: "Study of the relativistic quantum mechanical phenomenon where electrons in graphene can pass through potential barriers with 100% transmission probability, demonstrating the unique properties of Dirac fermions.",
       reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/Klein%20Tunneling%20in%20Graphene.pdf",
-      category: "Physics",
-      icon: "⚛️"
+      category: "Physics"
     },
     {
       title: "Orbital Hall Effect",
       description: "Investigation of the orbital Hall effect - a transport phenomenon where an orbital angular momentum current flows perpendicular to an applied electric field, exploring its role in spintronics.",
       reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/Orbital%20Hall%20Effect.pdf",
-      category: "Physics",
-      icon: "🌀"
+      category: "Physics"
     },
     {
       title: "Supervised Learning Project (SLP)",
-      description: "Comprehensive machine learning project implementing and analyzing various supervised learning algorithms for classification and regression tasks with detailed performance evaluation.",
+      description: "Comprehensive project implementing and analyzing various supervised learning algorithms for classification and regression tasks with detailed performance evaluation.",
       reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/SLP_final_report.pdf",
-      category: "Machine Learning",
-      icon: "🤖"
+      category: "Data Science"
     },
     {
       title: "AIDS Data Analysis Project",
-      description: "Data science project involving statistical analysis and predictive modeling on AIDS-related datasets, utilizing machine learning techniques for pattern recognition and insights extraction.",
+      description: "Data science project involving statistical analysis and predictive modeling on AIDS-related datasets, utilizing computational techniques for pattern recognition and insights extraction.",
       reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/AIDS%20PROJECT.pdf",
-      category: "Data Science",
-      icon: "📊"
+      category: "Data Science"
     },
     {
       title: "C++ Programming Project",
       description: "Object-oriented programming project in C++ demonstrating core concepts including classes, inheritance, polymorphism, and efficient algorithm implementation.",
       reportUrl: "https://github.com/Soumik969/All_at_once/blob/main/CPP-23b1825.pdf",
-      category: "Programming",
-      icon: "💻"
+      category: "Programming"
     }
   ];
 
@@ -101,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
       card.className = 'project-card';
       card.style.animationDelay = `${index * 0.1}s`;
       card.innerHTML = `
-        <div class="project-icon">${project.icon}</div>
         <div class="project-content">
           <div class="project-header">
             <h3>${project.title}</h3>
@@ -452,13 +446,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     
     const roastMessages = [
-      { max: 0, msg: "You didn't even try!", emoji: '🤡' },
-      { max: 3, msg: 'My grandma plays better!', emoji: '👵' },
-      { max: 5, msg: 'Are you a baby bird?', emoji: '😅' },
-      { max: 10, msg: 'Skill issue detected!', emoji: '📉' },
-      { max: 20, msg: 'Almost decent... almost', emoji: '🫠' },
-      { max: 50, msg: "Ok you're getting there", emoji: '🔥' },
-      { max: Infinity, msg: "Respect! You're a legend!", emoji: '👑' }
+      { max: 0, msg: "You didn't even try!" },
+      { max: 3, msg: 'My grandma plays better!' },
+      { max: 5, msg: 'Are you a baby bird?' },
+      { max: 10, msg: 'Skill issue detected!' },
+      { max: 20, msg: 'Almost decent... almost' },
+      { max: 50, msg: "Ok you're getting there" },
+      { max: Infinity, msg: "Respect! You're a legend!" }
     ];
     
     const roast = roastMessages.find(r => score <= r.max);
@@ -486,27 +480,24 @@ document.addEventListener('DOMContentLoaded', () => {
     
     ctx.fillStyle = isDark ? '#fbbf24' : '#f59e0b';
     ctx.font = '16px Inter, Arial, sans-serif';
-    ctx.fillText(roast.msg, canvas.width / 2, panelY + 80);
-    
-    ctx.font = '40px Arial';
-    ctx.fillText(roast.emoji, canvas.width / 2, panelY + 130);
+    ctx.fillText(roast.msg, canvas.width / 2, panelY + 85);
     
     ctx.fillStyle = isDark ? '#94a3b8' : '#64748b';
     ctx.font = '16px Inter, Arial, sans-serif';
-    ctx.fillText('Your Score', canvas.width / 2, panelY + 165);
+    ctx.fillText('Your Score', canvas.width / 2, panelY + 130);
     
     ctx.font = 'bold 42px Inter, Arial, sans-serif';
     ctx.fillStyle = isDark ? '#f1f5f9' : '#1e293b';
-    ctx.fillText(score.toString(), canvas.width / 2, panelY + 210);
+    ctx.fillText(score.toString(), canvas.width / 2, panelY + 175);
     
     ctx.font = '16px Inter, Arial, sans-serif';
     ctx.fillStyle = isDark ? '#94a3b8' : '#64748b';
-    ctx.fillText(`Best: ${highScore}`, canvas.width / 2, panelY + 240);
+    ctx.fillText(`Best: ${highScore}`, canvas.width / 2, panelY + 210);
     
     if (score >= highScore && score > 0) {
       ctx.fillStyle = '#22c55e';
       ctx.font = 'bold 16px Inter, Arial, sans-serif';
-      ctx.fillText('🎉 NEW BEST!', canvas.width / 2, panelY + 268);
+      ctx.fillText('NEW BEST!', canvas.width / 2, panelY + 245);
     }
     
     ctx.fillStyle = isDark ? '#3b82f6' : '#2563eb';
@@ -633,6 +624,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('keydown', (e) => {
+    // Don't intercept keyboard events when user is typing in an input field
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+      return;
+    }
+    
     if (e.code === 'Space') {
       e.preventDefault();
       if (gameState === 'playing') {
@@ -846,7 +842,7 @@ document.addEventListener('DOMContentLoaded', () => {
     snakeCtx.fillStyle = colors.text;
     snakeCtx.font = 'bold 36px Inter, sans-serif';
     snakeCtx.textAlign = 'center';
-    snakeCtx.fillText('🐍 SNAKE', snakeCanvas.width / 2, 100);
+    snakeCtx.fillText('SNAKE', snakeCanvas.width / 2, 100);
     
     snakeCtx.fillStyle = colors.textMuted;
     snakeCtx.font = '16px Inter, sans-serif';
@@ -856,7 +852,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (snakeHighScore > 0) {
       snakeCtx.fillStyle = colors.accent;
       snakeCtx.font = 'bold 18px Inter, sans-serif';
-      snakeCtx.fillText(`🏆 Best: ${snakeHighScore}`, snakeCanvas.width / 2, 365);
+      snakeCtx.fillText(`Best: ${snakeHighScore}`, snakeCanvas.width / 2, 365);
     }
   }
 
@@ -864,13 +860,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const colors = getSnakeColors();
     
     const roastMessages = [
-      { max: 0, msg: 'You ate yourself instantly!', emoji: '🤦' },
-      { max: 20, msg: 'More like a worm than a snake', emoji: '😂' },
-      { max: 50, msg: 'Cold blooded failure!', emoji: '🫣' },
-      { max: 100, msg: 'Skill issue! Try harder!', emoji: '📉' },
-      { max: 150, msg: "Now we're talking!", emoji: '👀' },
-      { max: 200, msg: 'Snek master loading...', emoji: '💪' },
-      { max: Infinity, msg: 'You ARE the snake king!', emoji: '🏆' }
+      { max: 0, msg: 'You ate yourself instantly!' },
+      { max: 20, msg: 'More like a worm than a snake' },
+      { max: 50, msg: 'Cold blooded failure!' },
+      { max: 100, msg: 'Skill issue! Try harder!' },
+      { max: 150, msg: "Now we're talking!" },
+      { max: 200, msg: 'Snek master loading...' },
+      { max: Infinity, msg: 'You ARE the snake king!' }
     ];
     
     const roast = roastMessages.find(r => snakeScore <= r.max);
@@ -879,7 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
     snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
     
     const panelWidth = 300;
-    const panelHeight = 260;
+    const panelHeight = 220;
     const panelX = (snakeCanvas.width - panelWidth) / 2;
     const panelY = (snakeCanvas.height - panelHeight) / 2;
     
@@ -900,26 +896,23 @@ document.addEventListener('DOMContentLoaded', () => {
     snakeCtx.font = '14px Inter, sans-serif';
     snakeCtx.fillText(roast.msg, snakeCanvas.width / 2, panelY + 70);
     
-    snakeCtx.font = '36px Arial';
-    snakeCtx.fillText(roast.emoji, snakeCanvas.width / 2, panelY + 115);
-    
     snakeCtx.fillStyle = colors.text;
     snakeCtx.font = '18px Inter, sans-serif';
-    snakeCtx.fillText(`Score: ${snakeScore}`, snakeCanvas.width / 2, panelY + 155);
+    snakeCtx.fillText(`Score: ${snakeScore}`, snakeCanvas.width / 2, panelY + 110);
     
     snakeCtx.fillStyle = colors.accent;
     snakeCtx.font = 'bold 16px Inter, sans-serif';
-    snakeCtx.fillText(`🏆 Best: ${snakeHighScore}`, snakeCanvas.width / 2, panelY + 185);
+    snakeCtx.fillText(`Best: ${snakeHighScore}`, snakeCanvas.width / 2, panelY + 140);
     
     if (snakeScore === snakeHighScore && snakeScore > 0) {
       snakeCtx.fillStyle = '#22c55e';
       snakeCtx.font = 'bold 14px Inter, sans-serif';
-      snakeCtx.fillText('🎉 NEW HIGH SCORE!', snakeCanvas.width / 2, panelY + 215);
+      snakeCtx.fillText('NEW HIGH SCORE!', snakeCanvas.width / 2, panelY + 170);
     }
     
     snakeCtx.fillStyle = colors.textMuted;
     snakeCtx.font = '14px Inter, sans-serif';
-    snakeCtx.fillText('Click START to play again', snakeCanvas.width / 2, panelY + 245);
+    snakeCtx.fillText('Click START to play again', snakeCanvas.width / 2, panelY + 205);
   }
 
   function updateSnake() {
@@ -1169,7 +1162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const memoryStatusEl = document.getElementById('memoryStatus');
   const memoryResetBtn = document.getElementById('memoryResetBtn');
 
-  const memoryEmojis = ['🎮', '🎯', '🎨', '🎪', '🎭', '🎰', '🎲', '🎸'];
+  const memoryEmojis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
   let memoryCards = [];
   let flippedCards = [];
   let matchedPairs = 0;
@@ -1223,7 +1216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         memoryLocked = false;
 
         if (matchedPairs === memoryEmojis.length) {
-          memoryStatusEl.textContent = `🎉 You won in ${memoryMoves} moves!`;
+          memoryStatusEl.textContent = `You won in ${memoryMoves} moves!`;
         }
       } else {
         setTimeout(() => {
@@ -1251,7 +1244,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const typingParagraphs = [
     "The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.",
     "Physics is the natural science that studies matter and energy. It explores the fundamental laws of the universe.",
-    "Machine learning enables computers to learn from data. It is transforming industries around the world.",
+    "Computational methods enable powerful data analysis. They are transforming industries around the world.",
     "Programming is the art of telling a computer what to do. Good code is both efficient and readable.",
     "Quantum mechanics describes nature at the smallest scales. Particles behave as both waves and particles.",
     "Data science combines statistics and programming. It helps us find patterns in complex datasets.",
@@ -1347,7 +1340,7 @@ document.addEventListener('DOMContentLoaded', () => {
       typingGameActive = false;
       typingInput.disabled = true;
       if (typingInterval) clearInterval(typingInterval);
-      typingStatus.textContent = '🎉 Perfect! You completed the text!';
+      typingStatus.textContent = 'Perfect! You completed the text!';
     }
   });
 
