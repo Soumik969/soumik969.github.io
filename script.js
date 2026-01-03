@@ -1026,6 +1026,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   snakeStartBtn.addEventListener('click', startSnakeGame);
   drawSnakeStartScreen();
+  
+  // Mobile Touch Controls for Snake Game
+  const snakeBtnUp = document.getElementById('snakeBtnUp');
+  const snakeBtnDown = document.getElementById('snakeBtnDown');
+  const snakeBtnLeft = document.getElementById('snakeBtnLeft');
+  const snakeBtnRight = document.getElementById('snakeBtnRight');
+
+  function handleSnakeDirection(dir) {
+    if (snakeGameState !== 'playing') return;
+    
+    switch (dir) {
+      case 'up':
+        if (direction. y !== 1) nextDirection = { x: 0, y: -1 };
+        break;
+      case 'down':
+        if (direction.y !== -1) nextDirection = { x: 0, y: 1 };
+        break;
+      case 'left':
+        if (direction.x !== 1) nextDirection = { x: -1, y: 0 };
+        break;
+      case 'right': 
+        if (direction.x !== -1) nextDirection = { x: 1, y: 0 };
+        break;
+    }
+  }
+
+  // Click events for buttons
+  snakeBtnUp. addEventListener('click', () => handleSnakeDirection('up'));
+  snakeBtnDown.addEventListener('click', () => handleSnakeDirection('down'));
+  snakeBtnLeft.addEventListener('click', () => handleSnakeDirection('left'));
+  snakeBtnRight.addEventListener('click', () => handleSnakeDirection('right'));
+
+  // Touch events for better mobile responsiveness
+  snakeBtnUp.addEventListener('touchstart', (e) => { e.preventDefault(); handleSnakeDirection('up'); });
+  snakeBtnDown.addEventListener('touchstart', (e) => { e.preventDefault(); handleSnakeDirection('down'); });
+  snakeBtnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); handleSnakeDirection('left'); });
+  snakeBtnRight. addEventListener('touchstart', (e) => { e.preventDefault(); handleSnakeDirection('right'); });
 
   // ========== TIC TAC TOE GAME ==========
   const tttBoard = document.getElementById('tttBoard');
@@ -1352,5 +1389,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   typingStartBtn.addEventListener('click', startTypingTest);
-
+  // Fix:  Prevent space bar from triggering page scroll while typing
+  typingInput.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      e.stopPropagation();
+    }
+  });
 }); // End of DOMContentLoaded
