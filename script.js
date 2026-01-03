@@ -1038,7 +1038,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     switch (dir) {
       case 'up':
-        if (direction. y !== 1) nextDirection = { x: 0, y: -1 };
+        if (direction.y !== 1) nextDirection = { x: 0, y: -1 };
         break;
       case 'down':
         if (direction.y !== -1) nextDirection = { x: 0, y: 1 };
@@ -1053,7 +1053,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Click events for buttons
-  snakeBtnUp. addEventListener('click', () => handleSnakeDirection('up'));
+  snakeBtnUp.addEventListener('click', () => handleSnakeDirection('up'));
   snakeBtnDown.addEventListener('click', () => handleSnakeDirection('down'));
   snakeBtnLeft.addEventListener('click', () => handleSnakeDirection('left'));
   snakeBtnRight.addEventListener('click', () => handleSnakeDirection('right'));
@@ -1062,7 +1062,7 @@ document.addEventListener('DOMContentLoaded', () => {
   snakeBtnUp.addEventListener('touchstart', (e) => { e.preventDefault(); handleSnakeDirection('up'); });
   snakeBtnDown.addEventListener('touchstart', (e) => { e.preventDefault(); handleSnakeDirection('down'); });
   snakeBtnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); handleSnakeDirection('left'); });
-  snakeBtnRight. addEventListener('touchstart', (e) => { e.preventDefault(); handleSnakeDirection('right'); });
+  snakeBtnRight.addEventListener('touchstart', (e) => { e.preventDefault(); handleSnakeDirection('right'); });
 
   // ========== TIC TAC TOE GAME ==========
   const tttBoard = document.getElementById('tttBoard');
