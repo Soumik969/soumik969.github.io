@@ -1092,3 +1092,45 @@ main {
     justify-content: center;
   }
 }
+
+/* Snake Touch Controls */
+.snake-touch-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-top: 15px;
+}
+
+.snake-btn-row {
+  display: flex;
+  gap: 5px;
+}
+
+.snake-btn {
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.snake-btn:active {
+  background: var(--accent);
+  color: white;
+  transform: scale(0.95);
+}
+
+/* Hide touch controls on desktop */
+@media (min-width: 769px) {
+  .snake-touch-controls {
+    display: none;
+  }
+}
