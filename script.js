@@ -1436,9 +1436,9 @@ document.addEventListener('DOMContentLoaded', () => {
     skillBars.forEach(bar => {
       const percent = bar.getAttribute('data-percent');
       // Validate percentage is within valid range
-      const validPercent = Math.min(Math.max(parseInt(percent) || 0, 0), 100);
+      const numPercent = Number(percent);
+      const validPercent = isNaN(numPercent) ? 0 : Math.min(Math.max(numPercent, 0), 100);
       bar.style.width = validPercent + '%';
-      bar.classList.add('animated');
     });
   };
 

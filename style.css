@@ -516,10 +516,6 @@ main {
   transition: width 1.5s ease-in-out;
 }
 
-.skill-bar-fill.animated {
-  /* This class is added by JavaScript when the skill bars become visible on scroll */
-}
-
 /* Game Tabs */
 .game-tabs {
   display: flex;
