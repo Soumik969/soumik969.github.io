@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="scroll-progress" id="scrollProgress"></div>
   <div class="gradient-bg" aria-hidden="true"></div>
 
   <header class="header">
@@ -98,88 +99,173 @@
         <div class="skills-category">
           <h3 class="skills-category-title">Programming Languages</h3>
           <div class="skills-grid">
-            <div class="skill-item">
-              <span class="skill-icon">🐍</span>
-              <span class="skill-name">Python</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">🐍</span> Python</div>
+                <div class="skill-bar-percent">90%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="90"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">💻</span>
-              <span class="skill-name">C++</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">💻</span> C++</div>
+                <div class="skill-bar-percent">85%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="85"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">📊</span>
-              <span class="skill-name">MATLAB</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">📊</span> MATLAB</div>
+                <div class="skill-bar-percent">80%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="80"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">🌐</span>
-              <span class="skill-name">JavaScript</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">🌐</span> JavaScript</div>
+                <div class="skill-bar-percent">75%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="75"></div>
+              </div>
             </div>
           </div>
         </div>
         <div class="skills-category">
           <h3 class="skills-category-title">Machine Learning & Data Science</h3>
           <div class="skills-grid">
-            <div class="skill-item">
-              <span class="skill-icon">🔥</span>
-              <span class="skill-name">PyTorch</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">🔥</span> PyTorch</div>
+                <div class="skill-bar-percent">85%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="85"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">🧠</span>
-              <span class="skill-name">TensorFlow</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">🧠</span> TensorFlow</div>
+                <div class="skill-bar-percent">80%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="80"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">📈</span>
-              <span class="skill-name">Scikit-learn</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">📈</span> Scikit-learn</div>
+                <div class="skill-bar-percent">88%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="88"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">🐼</span>
-              <span class="skill-name">Pandas</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">🐼</span> Pandas</div>
+                <div class="skill-bar-percent">90%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="90"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">🔢</span>
-              <span class="skill-name">NumPy</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">🔢</span> NumPy</div>
+                <div class="skill-bar-percent">92%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="92"></div>
+              </div>
             </div>
           </div>
         </div>
         <div class="skills-category">
           <h3 class="skills-category-title">Physics & Simulation</h3>
           <div class="skills-grid">
-            <div class="skill-item">
-              <span class="skill-icon">⚛️</span>
-              <span class="skill-name">Quantum Mechanics</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">⚛️</span> Quantum Mechanics</div>
+                <div class="skill-bar-percent">85%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="85"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">🌀</span>
-              <span class="skill-name">Condensed Matter</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">🌀</span> Condensed Matter</div>
+                <div class="skill-bar-percent">80%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="80"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">📐</span>
-              <span class="skill-name">Mathematical Modeling</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">📐</span> Mathematical Modeling</div>
+                <div class="skill-bar-percent">88%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="88"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">💡</span>
-              <span class="skill-name">Numerical Methods</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">💡</span> Numerical Methods</div>
+                <div class="skill-bar-percent">90%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="90"></div>
+              </div>
             </div>
           </div>
         </div>
         <div class="skills-category">
           <h3 class="skills-category-title">Tools & Platforms</h3>
           <div class="skills-grid">
-            <div class="skill-item">
-              <span class="skill-icon">🐙</span>
-              <span class="skill-name">Git/GitHub</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">🐙</span> Git/GitHub</div>
+                <div class="skill-bar-percent">85%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="85"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">📓</span>
-              <span class="skill-name">Jupyter</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">📓</span> Jupyter</div>
+                <div class="skill-bar-percent">90%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="90"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">🐧</span>
-              <span class="skill-name">Linux</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">🐧</span> Linux</div>
+                <div class="skill-bar-percent">82%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="82"></div>
+              </div>
             </div>
-            <div class="skill-item">
-              <span class="skill-icon">📝</span>
-              <span class="skill-name">LaTeX</span>
+            <div class="skill-bar-container">
+              <div class="skill-bar-header">
+                <div class="skill-bar-name"><span class="skill-icon">📝</span> LaTeX</div>
+                <div class="skill-bar-percent">88%</div>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="88"></div>
+              </div>
             </div>
           </div>
         </div>
