@@ -1410,11 +1410,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========== TYPEWRITER EFFECT FOR HERO SECTION ==========
   function typeWriter(element, text, speed = 100) {
     let i = 0;
-    element.innerHTML = '';
+    element.textContent = '';
     
     function type() {
       if (i < text.length) {
-        element.innerHTML += text.charAt(i);
+        element.textContent += text.charAt(i);
         i++;
         setTimeout(type, speed);
       }
@@ -1435,7 +1435,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const animateSkillBars = () => {
     skillBars.forEach(bar => {
       const percent = bar.getAttribute('data-percent');
-      bar.style.width = percent + '%';
+      // Validate percentage is within valid range
+      const validPercent = Math.min(Math.max(parseInt(percent) || 0, 0), 100);
+      bar.style.width = validPercent + '%';
       bar.classList.add('animated');
     });
   };

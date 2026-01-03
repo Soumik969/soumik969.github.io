@@ -517,7 +517,7 @@ main {
 }
 
 .skill-bar-fill.animated {
-  /* Width set by JS based on data-percent */
+  /* This class is added by JavaScript when the skill bars become visible on scroll */
 }
 
 /* Game Tabs */
