@@ -1395,4 +1395,65 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
     }
   });
+
+  // ========== SCROLL PROGRESS BAR ==========
+  const scrollProgress = document.getElementById('scrollProgress');
+
+  window.addEventListener('scroll', () => {
+    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (window.scrollY / windowHeight) * 100;
+    if (scrollProgress) {
+      scrollProgress.style.width = scrolled + '%';
+    }
+  });
+
+  // ========== TYPEWRITER EFFECT FOR HERO SECTION ==========
+  function typeWriter(element, text, speed = 100) {
+    let i = 0;
+    element.textContent = '';
+    
+    function type() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+    type();
+  }
+
+  // Apply to the title element
+  const titleElement = document.querySelector('.title');
+  if (titleElement) {
+    const originalText = titleElement.textContent;
+    typeWriter(titleElement, originalText, 80);
+  }
+
+  // ========== ANIMATE SKILL BARS ON SCROLL ==========
+  const skillBars = document.querySelectorAll('.skill-bar-fill');
+
+  const animateSkillBars = () => {
+    skillBars.forEach(bar => {
+      const percent = bar.getAttribute('data-percent');
+      // Validate percentage is within valid range
+      const numPercent = Number(percent);
+      const validPercent = isNaN(numPercent) ? 0 : Math.min(Math.max(numPercent, 0), 100);
+      bar.style.width = validPercent + '%';
+    });
+  };
+
+  // Trigger animation when skills section is visible
+  const skillsSection = document.getElementById('skills');
+  const skillsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateSkillBars();
+        skillsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  if (skillsSection) {
+    skillsObserver.observe(skillsSection);
+  }
 }); // End of DOMContentLoaded
