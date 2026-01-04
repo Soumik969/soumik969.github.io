@@ -30,6 +30,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="custom-cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
   <div class="scroll-progress" id="scrollProgress"></div>
   <div class="gradient-bg" aria-hidden="true"></div>
 
@@ -45,8 +47,10 @@
     </nav>
     <div class="header-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span class="icon-sun">☀</span>
-        <span class="icon-moon">☾</span>
+        <div class="theme-toggle-icon">
+          <span class="icon-sun">☀️</span>
+          <span class="icon-moon">🌙</span>
+        </div>
       </button>
       <button class="kebab-btn" id="kebabBtn" aria-label="Open menu">⋮</button>
     </div>
@@ -272,6 +276,45 @@
       </div>
     </section>
 
+    <section class="section" id="journey">
+      <div class="section-header">
+        <h2>My Journey</h2>
+        <p>Academic milestones and achievements</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item" data-year="2023">
+          <div class="timeline-content">
+            <h3>🎓 Joined IIT Bombay</h3>
+            <p>Started undergraduate studies in Engineering Physics</p>
+          </div>
+        </div>
+        <div class="timeline-item" data-year="2023">
+          <div class="timeline-content">
+            <h3>🔬 Physics Research</h3>
+            <p>Began exploring quantum mechanics and condensed matter physics</p>
+          </div>
+        </div>
+        <div class="timeline-item" data-year="2024">
+          <div class="timeline-content">
+            <h3>🤖 Machine Learning</h3>
+            <p>Started learning ML/AI and working on data science projects</p>
+          </div>
+        </div>
+        <div class="timeline-item" data-year="2024">
+          <div class="timeline-content">
+            <h3>💻 Project Development</h3>
+            <p>Completed multiple research projects in physics and ML</p>
+          </div>
+        </div>
+        <div class="timeline-item" data-year="2025">
+          <div class="timeline-content">
+            <h3>🚀 Building Portfolio</h3>
+            <p>Created this portfolio website to showcase my work</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="games">
       <div class="section-header">
         <h2>Fun Games</h2>
@@ -388,8 +431,15 @@
         <h2>Projects</h2>
         <p>A selection of my academic work and research</p>
       </div>
-      <div class="projects-list" id="projectsList">
-        <!-- Projects rendered by JS -->
+      <div class="carousel-container">
+        <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous project">❮</button>
+        <div class="carousel-wrapper">
+          <div class="carousel-track" id="projectsCarousel">
+            <!-- Projects will be rendered here -->
+          </div>
+        </div>
+        <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next project">❯</button>
+        <div class="carousel-dots" id="carouselDots"></div>
       </div>
     </section>
 

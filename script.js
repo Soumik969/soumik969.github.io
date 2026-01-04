@@ -1,15 +1,87 @@
 // Wait for DOM to be fully loaded before running any code
 document.addEventListener('DOMContentLoaded', () => {
-  // Theme toggle
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const cursorFollower = document.getElementById('cursorFollower');
+
+  if (cursor && cursorFollower) {
+    let cursorX = 0, cursorY = 0;
+    let followerX = 0, followerY = 0;
+    let animationId = null;
+    
+    document.addEventListener('mousemove', (e) => {
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+      
+      // Start animation if not already running
+      if (!animationId) {
+        animateFollower();
+      }
+    });
+    
+    // Smooth follower animation using requestAnimationFrame
+    function animateFollower() {
+      const dx = cursorX - followerX;
+      const dy = cursorY - followerY;
+      
+      // Only continue animation if there's significant movement
+      if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+        followerX += dx * 0.1;
+        followerY += dy * 0.1;
+        
+        cursorFollower.style.left = followerX + 'px';
+        cursorFollower.style.top = followerY + 'px';
+        
+        animationId = requestAnimationFrame(animateFollower);
+      } else {
+        // Stop animation when cursor is stationary
+        animationId = null;
+      }
+    }
+
+    // Hover effect on interactive elements
+    const hoverElements = document.querySelectorAll('a, button, .btn, .project-card, .skill-item, .game-tab, .contact-card');
+    
+    hoverElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover');
+        cursorFollower.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover');
+        cursorFollower.classList.remove('hover');
+      });
+    });
+
+    // Click effect
+    document.addEventListener('mousedown', () => cursor.classList.add('click'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+  }
+
+  // Theme toggle with animation
   const themeToggle = document.getElementById('themeToggle');
   const storedTheme = localStorage.getItem('portfolio-theme') || 'light';
   document.documentElement.setAttribute('data-theme', storedTheme);
 
+  const themeTransition = document.createElement('div');
+  themeTransition.className = 'theme-transition';
+  document.body.appendChild(themeTransition);
+
   themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('portfolio-theme', next);
+    themeTransition.classList.add('active');
+    
+    setTimeout(() => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('portfolio-theme', next);
+    }, 300);
+    
+    setTimeout(() => {
+      themeTransition.classList.remove('active');
+    }, 600);
   });
 
   // Kebab menu / drawer
@@ -91,15 +163,19 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   // Render projects
-  const projectsList = document.getElementById('projectsList');
+  const carouselTrack = document.getElementById('projectsCarousel');
+  const carouselDots = document.getElementById('carouselDots');
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
 
   function renderProjects() {
-    projectsList.innerHTML = '';
+    if (!carouselTrack) return;
+    
+    carouselTrack.innerHTML = '';
     
     projects.forEach((project, index) => {
       const card = document.createElement('div');
       card.className = 'project-card';
-      card.style.animationDelay = `${index * 0.1}s`;
       card.innerHTML = `
         <div class="project-icon">${project.icon}</div>
         <div class="project-content">
@@ -117,11 +193,83 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="project-glow"></div>
       `;
-      projectsList.appendChild(card);
+      carouselTrack.appendChild(card);
     });
   }
 
   renderProjects();
+
+  // Project Carousel
+  let currentSlide = 0;
+
+  function initCarousel() {
+    if (!carouselDots) return;
+    
+    const totalSlides = projects.length;
+    
+    // Create dots
+    carouselDots.innerHTML = '';
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+      dot.addEventListener('click', () => goToSlide(i));
+      carouselDots.appendChild(dot);
+    }
+    
+    updateCarousel();
+  }
+
+  function updateCarousel() {
+    if (!carouselTrack) return;
+    carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    
+    // Update dots
+    document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % projects.length;
+    updateCarousel();
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + projects.length) % projects.length;
+    updateCarousel();
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+  // Auto-play carousel (store interval for cleanup if needed)
+  let carouselInterval = null;
+  if (carouselTrack && projects.length > 1) {
+    carouselInterval = setInterval(nextSlide, 5000);
+  }
+
+  // Initialize after rendering projects
+  initCarousel();
+
+  // Timeline Animation
+  const timelineItems = document.querySelectorAll('.timeline-item');
+
+  const timelineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  timelineItems.forEach(item => {
+    timelineObserver.observe(item);
+  });
 
   // Smooth reveal animation on scroll
   const observerOptions = {
