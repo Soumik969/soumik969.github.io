@@ -34,16 +34,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseup', () => cursor.classList.remove('click'));
   }
 
-  // Theme toggle
+  // Theme toggle with animation
   const themeToggle = document.getElementById('themeToggle');
   const storedTheme = localStorage.getItem('portfolio-theme') || 'light';
   document.documentElement.setAttribute('data-theme', storedTheme);
 
+  const themeTransition = document.createElement('div');
+  themeTransition.className = 'theme-transition';
+  document.body.appendChild(themeTransition);
+
   themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('portfolio-theme', next);
+    themeTransition.classList.add('active');
+    
+    setTimeout(() => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('portfolio-theme', next);
+    }, 300);
+    
+    setTimeout(() => {
+      themeTransition.classList.remove('active');
+    }, 600);
   });
 
   // Kebab menu / drawer
