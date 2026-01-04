@@ -1,5 +1,39 @@
 // Wait for DOM to be fully loaded before running any code
 document.addEventListener('DOMContentLoaded', () => {
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const cursorFollower = document.getElementById('cursorFollower');
+
+  if (cursor && cursorFollower) {
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      
+      setTimeout(() => {
+        cursorFollower.style.left = e.clientX + 'px';
+        cursorFollower.style.top = e.clientY + 'px';
+      }, 80);
+    });
+
+    // Hover effect on interactive elements
+    const hoverElements = document.querySelectorAll('a, button, .btn, .project-card, .skill-item, .game-tab, .contact-card');
+    
+    hoverElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover');
+        cursorFollower.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover');
+        cursorFollower.classList.remove('hover');
+      });
+    });
+
+    // Click effect
+    document.addEventListener('mousedown', () => cursor.classList.add('click'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+  }
+
   // Theme toggle
   const themeToggle = document.getElementById('themeToggle');
   const storedTheme = localStorage.getItem('portfolio-theme') || 'light';
