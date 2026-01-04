@@ -5,15 +5,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const cursorFollower = document.getElementById('cursorFollower');
 
   if (cursor && cursorFollower) {
+    let cursorX = 0, cursorY = 0;
+    let followerX = 0, followerY = 0;
+    
     document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      
-      setTimeout(() => {
-        cursorFollower.style.left = e.clientX + 'px';
-        cursorFollower.style.top = e.clientY + 'px';
-      }, 80);
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
     });
+    
+    // Smooth follower animation using requestAnimationFrame
+    function animateFollower() {
+      const dx = cursorX - followerX;
+      const dy = cursorY - followerY;
+      
+      followerX += dx * 0.1;
+      followerY += dy * 0.1;
+      
+      cursorFollower.style.left = followerX + 'px';
+      cursorFollower.style.top = followerY + 'px';
+      
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
 
     // Hover effect on interactive elements
     const hoverElements = document.querySelectorAll('a, button, .btn, .project-card, .skill-item, .game-tab, .contact-card');
@@ -221,8 +236,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (prevBtn) prevBtn.addEventListener('click', prevSlide);
   if (nextBtn) nextBtn.addEventListener('click', nextSlide);
 
-  // Auto-play carousel
-  setInterval(nextSlide, 5000);
+  // Auto-play carousel (store interval for cleanup if needed)
+  let carouselInterval = null;
+  if (carouselTrack && projects.length > 1) {
+    carouselInterval = setInterval(nextSlide, 5000);
+  }
 
   // Initialize after rendering projects
   initCarousel();

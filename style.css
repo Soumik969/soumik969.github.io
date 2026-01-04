@@ -86,9 +86,10 @@ body {
   transform: translate(-50%, -50%) scale(0.8);
 }
 
-/* Hide default cursor on desktop */
+/* Hide default cursor on desktop for interactive elements */
 @media (min-width: 769px) {
-  * {
+  body, a, button, .btn, .project-card, .skill-item, .game-tab, .contact-card, 
+  input[type="text"], input[type="email"], textarea {
     cursor: none !important;
   }
 }
@@ -97,6 +98,16 @@ body {
 @media (max-width: 768px) {
   .custom-cursor, .cursor-follower {
     display: none;
+  }
+}
+
+/* Accessibility: Allow users to disable custom cursor via prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor, .cursor-follower {
+    display: none;
+  }
+  body, a, button, .btn, .project-card, .skill-item, .game-tab, .contact-card {
+    cursor: auto !important;
   }
 }
 
