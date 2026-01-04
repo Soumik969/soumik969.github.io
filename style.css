@@ -88,8 +88,7 @@ body {
 
 /* Hide default cursor on desktop for interactive elements */
 @media (min-width: 769px) {
-  body, a, button, .btn, .project-card, .skill-item, .game-tab, .contact-card, 
-  input[type="text"], input[type="email"], textarea {
+  body, a, button, .btn, .project-card, .skill-item, .game-tab, .contact-card {
     cursor: none !important;
   }
 }

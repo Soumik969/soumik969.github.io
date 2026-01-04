@@ -7,12 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cursor && cursorFollower) {
     let cursorX = 0, cursorY = 0;
     let followerX = 0, followerY = 0;
+    let animationId = null;
     
     document.addEventListener('mousemove', (e) => {
       cursorX = e.clientX;
       cursorY = e.clientY;
       cursor.style.left = cursorX + 'px';
       cursor.style.top = cursorY + 'px';
+      
+      // Start animation if not already running
+      if (!animationId) {
+        animateFollower();
+      }
     });
     
     // Smooth follower animation using requestAnimationFrame
@@ -20,15 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const dx = cursorX - followerX;
       const dy = cursorY - followerY;
       
-      followerX += dx * 0.1;
-      followerY += dy * 0.1;
-      
-      cursorFollower.style.left = followerX + 'px';
-      cursorFollower.style.top = followerY + 'px';
-      
-      requestAnimationFrame(animateFollower);
+      // Only continue animation if there's significant movement
+      if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+        followerX += dx * 0.1;
+        followerY += dy * 0.1;
+        
+        cursorFollower.style.left = followerX + 'px';
+        cursorFollower.style.top = followerY + 'px';
+        
+        animationId = requestAnimationFrame(animateFollower);
+      } else {
+        // Stop animation when cursor is stationary
+        animationId = null;
+      }
     }
-    animateFollower();
 
     // Hover effect on interactive elements
     const hoverElements = document.querySelectorAll('a, button, .btn, .project-card, .skill-item, .game-tab, .contact-card');
