@@ -227,6 +227,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize after rendering projects
   initCarousel();
 
+  // Timeline Animation
+  const timelineItems = document.querySelectorAll('.timeline-item');
+
+  const timelineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  timelineItems.forEach(item => {
+    timelineObserver.observe(item);
+  });
+
   // Smooth reveal animation on scroll
   const observerOptions = {
     threshold: 0.1,
