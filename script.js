@@ -1410,12 +1410,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========== TYPEWRITER EFFECT FOR HERO SECTION ==========
   function typeWriter(element, text, speed = 100, callback) {
     let i = 0;
-    element.innerHTML = '';
+    element.textContent = '';
     element.style.visibility = 'visible';
     
     function type() {
       if (i < text.length) {
-        element.innerHTML += text.charAt(i);
+        element.textContent += text.charAt(i);
         i++;
         setTimeout(type, speed);
       } else if (callback) {
