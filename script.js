@@ -137,15 +137,19 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   // Render projects
-  const projectsList = document.getElementById('projectsList');
+  const carouselTrack = document.getElementById('projectsCarousel');
+  const carouselDots = document.getElementById('carouselDots');
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
 
   function renderProjects() {
-    projectsList.innerHTML = '';
+    if (!carouselTrack) return;
+    
+    carouselTrack.innerHTML = '';
     
     projects.forEach((project, index) => {
       const card = document.createElement('div');
       card.className = 'project-card';
-      card.style.animationDelay = `${index * 0.1}s`;
       card.innerHTML = `
         <div class="project-icon">${project.icon}</div>
         <div class="project-content">
@@ -163,11 +167,65 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="project-glow"></div>
       `;
-      projectsList.appendChild(card);
+      carouselTrack.appendChild(card);
     });
   }
 
   renderProjects();
+
+  // Project Carousel
+  let currentSlide = 0;
+
+  function initCarousel() {
+    if (!carouselDots) return;
+    
+    const totalSlides = projects.length;
+    
+    // Create dots
+    carouselDots.innerHTML = '';
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+      dot.addEventListener('click', () => goToSlide(i));
+      carouselDots.appendChild(dot);
+    }
+    
+    updateCarousel();
+  }
+
+  function updateCarousel() {
+    if (!carouselTrack) return;
+    carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    
+    // Update dots
+    document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % projects.length;
+    updateCarousel();
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + projects.length) % projects.length;
+    updateCarousel();
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+  // Auto-play carousel
+  setInterval(nextSlide, 5000);
+
+  // Initialize after rendering projects
+  initCarousel();
 
   // Smooth reveal animation on scroll
   const observerOptions = {
