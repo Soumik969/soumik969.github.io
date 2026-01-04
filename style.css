@@ -338,6 +338,24 @@ main {
   51%, 100% { opacity: 0; }
 }
 
+/* Typing cursor for name and title */
+.name, .title {
+  position: relative;
+}
+
+.name::after, .title::after {
+  content: '|';
+  position: absolute;
+  right: -10px;
+  animation: cursor-blink 1s infinite;
+  color: var(--accent);
+}
+
+/* Remove cursor after animation completes */
+.name.typed::after, .title.typed::after {
+  display: none;
+}
+
 .statement {
   font-size: 16px;
   color: var(--text-muted);
@@ -498,6 +516,7 @@ main {
   font-size: 14px;
   font-weight: 600;
   color: var(--accent);
+  display: none;
 }
 
 .skill-bar-bg {

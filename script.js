@@ -1408,25 +1408,46 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ========== TYPEWRITER EFFECT FOR HERO SECTION ==========
-  function typeWriter(element, text, speed = 100) {
+  function typeWriter(element, text, speed = 100, callback) {
     let i = 0;
     element.textContent = '';
+    element.style.visibility = 'visible';
     
     function type() {
       if (i < text.length) {
         element.textContent += text.charAt(i);
         i++;
         setTimeout(type, speed);
+      } else if (callback) {
+        callback();
       }
     }
     type();
   }
 
-  // Apply to the title element
+  // Apply typing animation to name first, then title
+  const nameElement = document.querySelector('.name');
   const titleElement = document.querySelector('.title');
-  if (titleElement) {
-    const originalText = titleElement.textContent;
-    typeWriter(titleElement, originalText, 80);
+
+  if (nameElement && titleElement) {
+    const nameText = nameElement.textContent;
+    const titleText = titleElement.textContent;
+    
+    // Hide initially
+    nameElement.style.visibility = 'hidden';
+    titleElement.style.visibility = 'hidden';
+    
+    // Type name first, then title
+    setTimeout(() => {
+      typeWriter(nameElement, nameText, 80, () => {
+        nameElement.classList.add('typed');
+        setTimeout(() => {
+          typeWriter(titleElement, titleText, 80, () => {
+            titleElement.classList.add('typed');
+          });
+        }, 300);
+      });
+    }, 500);
   }
 
   // ========== ANIMATE SKILL BARS ON SCROLL ==========
