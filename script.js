@@ -229,32 +229,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  let carouselInterval = null;
+
+  function resetCarouselInterval() {
+    if (carouselInterval) {
+      clearInterval(carouselInterval);
+    }
+    if (carouselTrack && projects.length > 1) {
+      carouselInterval = setInterval(nextSlide, 5000);
+    }
+  }
+
   function goToSlide(index) {
     currentSlide = index;
     updateCarousel();
+    resetCarouselInterval();
   }
 
   function nextSlide() {
     currentSlide = (currentSlide + 1) % projects.length;
     updateCarousel();
+    resetCarouselInterval();
   }
 
   function prevSlide() {
     currentSlide = (currentSlide - 1 + projects.length) % projects.length;
     updateCarousel();
+    resetCarouselInterval();
   }
 
   if (prevBtn) prevBtn.addEventListener('click', prevSlide);
   if (nextBtn) nextBtn.addEventListener('click', nextSlide);
 
-  // Auto-play carousel (store interval for cleanup if needed)
-  let carouselInterval = null;
-  if (carouselTrack && projects.length > 1) {
-    carouselInterval = setInterval(nextSlide, 5000);
-  }
-
   // Initialize after rendering projects
   initCarousel();
+  resetCarouselInterval();
 
   // Smooth reveal animation on scroll
   const observerOptions = {
@@ -436,9 +445,13 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
       const panel = btn.closest('.game-panel');
 
-      if (document.fullscreenElement === panel) {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
         // Already fullscreen — exit
-        document.exitFullscreen();
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
       } else {
         // Enter native fullscreen on the game panel
         if (panel.requestFullscreen) {
@@ -945,6 +958,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('keydown', (e) => {
+    // Check if Flappy Game is the active tab
+    const flappyGamePanel = document.getElementById('flappy-game');
+    if (!flappyGamePanel || !flappyGamePanel.classList.contains('active')) return;
+
     if (e.code === 'Space') {
       e.preventDefault();
       if (gameState === 'playing') {
