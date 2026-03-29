@@ -1,509 +1,425 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Soumik Sahoo — Portfolio</title>
-  <meta name="description" content="Soumik Sahoo's Portfolio - IIT Bombay - Physics & Machine Learning">
-  <meta name="keywords" content="Soumik Sahoo, IIT Bombay, Physics, Machine Learning, Data Science, Portfolio">
-  <meta name="author" content="Soumik Sahoo">
-  
-  <!-- Open Graph / Social Media Meta Tags -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Soumik Sahoo - Portfolio">
-  <meta property="og:description" content="IIT Bombay - Physics & Machine Learning Enthusiast">
-  <meta property="og:url" content="https://soumik969.github.io">
-  <meta property="og:site_name" content="Soumik Sahoo Portfolio">
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Soumik Sahoo - Portfolio">
-  <meta name="twitter:description" content="IIT Bombay - Physics & Machine Learning Enthusiast">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
-  
-  <!-- Preload Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soumik Sahoo — Portfolio</title>
+    <meta name="description" content="Soumik Sahoo's Portfolio - IIT Bombay - Physics & Machine Learning">
+    <meta name="keywords" content="Soumik Sahoo, IIT Bombay, Physics, Machine Learning, Data Science, Portfolio">
+    <meta name="author" content="Soumik Sahoo">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Soumik Sahoo - Portfolio">
+    <meta property="og:description" content="IIT Bombay - Physics & Machine Learning Enthusiast">
+    <meta property="og:url" content="https://soumik969.github.io">
+    <meta property="og:site_name" content="Soumik Sahoo Portfolio">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Soumik Sahoo - Portfolio">
+    <meta name="twitter:description" content="IIT Bombay - Physics & Machine Learning Enthusiast">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛️</text></svg>">
+
+    <!-- Preload Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="custom-cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
-  <div class="scroll-progress" id="scrollProgress"></div>
-  <div class="gradient-bg" aria-hidden="true"></div>
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+    <div class="scroll-progress" id="scrollProgress"></div>
 
-  <header class="header">
-    <a href="#" class="logo">Portfolio</a>
-    <nav class="nav">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#games">Games</a>
-      <a href="#projects">Projects</a>
-      <a href="#resume">Resume</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <div class="theme-toggle-icon">
-          <span class="icon-sun">☀️</span>
-          <span class="icon-moon">🌙</span>
-        </div>
-      </button>
-      <button class="kebab-btn" id="kebabBtn" aria-label="Open menu">⋮</button>
-    </div>
-  </header>
+    <!-- Animated Particle Background -->
+    <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
+    <div class="gradient-bg" aria-hidden="true"></div>
 
-  <aside class="drawer" id="drawer">
-    <nav class="drawer-nav">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#games">Fun Games</a>
-      <a href="#projects">Projects</a>
-      <a href="#resume">Resume</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </aside>
+    <header class="header" id="siteHeader">
+        <a href="#" class="logo">
+            <span class="logo-icon">⚛️</span>
+            <span class="logo-text">Soumik<span class="logo-accent">.</span></span>
+        </a>
+        <nav class="nav" id="mainNav">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#games" class="nav-link">Games</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#resume" class="nav-link">Resume</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <div class="theme-toggle-icon">
+                    <span class="icon-sun">☀️</span>
+                    <span class="icon-moon">🌙</span>
+                </div>
+            </button>
+            <button class="kebab-btn" id="kebabBtn" aria-label="Open menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </header>
 
-  <main>
-    <section class="hero" id="about">
-      <div class="hero-content">
-        <div class="hero-photo">
-          <div class="photo-frame" id="photoContainer">
-            <span class="photo-placeholder">Your Photo</span>
-            <!-- Replace the span above with: <img src="your-photo.jpg" alt="Soumik Sahoo" loading="lazy"> -->
-          </div>
-        </div>
-        <div class="hero-text">
-          <p class="greeting">Hello, I'm</p>
-          <h1 class="name">Soumik Sahoo</h1>
-          <p class="title">IIT Bombay</p>
-          <p class="statement">
-            I am passionate about bridging theoretical physics and computational methods. 
-            My work focuses on quantum transport, many-body systems, and applying machine learning 
-            to solve complex physical problems. I believe in making abstract concepts accessible 
-            through simulation and visualization.
-          </p>
-          <div class="hero-links">
-            <a href="#projects" class="btn primary">View Projects</a>
-            <a href="#contact" class="btn outline">Get in Touch</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <aside class="drawer" id="drawer">
+        <nav class="drawer-nav">
+            <a href="#about">About</a>
+            <a href="#games">Fun Games</a>
+            <a href="#projects">Projects</a>
+            <a href="#resume">Resume</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </aside>
 
-    <section class="section" id="skills">
-      <div class="section-header">
-        <h2>Skills & Technologies</h2>
-        <p>Tools and technologies I work with</p>
-      </div>
-      <div class="skills-container">
-        <div class="skills-category">
-          <h3 class="skills-category-title">Programming Languages</h3>
-          <div class="skills-grid">
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">🐍</span> Python</div>
-                <div class="skill-bar-percent">90%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="90"></div>
-              </div>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="about">
+            <div class="hero-content">
+                <div class="hero-photo">
+                    <div class="photo-frame" id="photoContainer">
+                        <span class="photo-placeholder">Your Photo</span>
+                        <!-- Replace the span above with: <img src="your-photo.jpg" alt="Soumik Sahoo" loading="lazy"> -->
+                        <div class="photo-glow"></div>
+                    </div>
+                    <div class="photo-badge">
+                        <span class="badge-dot"></span>
+                        Open to Collaborate
+                    </div>
+                </div>
+                <div class="hero-text">
+                    <p class="greeting">
+                        <span class="greeting-wave">👋</span>
+                        Hello, I'm
+                    </p>
+                    <h1 class="name">Soumik Sahoo</h1>
+                    <p class="title">
+                        <span class="title-tag">🎓</span>
+                        IIT Bombay · Engineering Physics
+                    </p>
+                    <p class="statement">
+                        I am passionate about bridging theoretical physics and computational methods.
+                        My work focuses on quantum transport, many-body systems, and applying machine learning
+                        to solve complex physical problems. I believe in making abstract concepts accessible
+                        through simulation and visualization.
+                    </p>
+                    <div class="hero-links">
+                        <a href="#projects" class="btn primary btn-glow" id="viewProjectsBtn">
+                            <span>View Projects</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M7 17L17 7M17 7H7M17 7V17" />
+                            </svg>
+                        </a>
+                        <a href="#contact" class="btn outline" id="getInTouchBtn">Get in Touch</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-target="5">0</span>
+                            <span class="hero-stat-label">Projects</span>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-target="3">0</span>
+                            <span class="hero-stat-label">Research Areas</span>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-target="2">0</span>
+                            <span class="hero-stat-label">Years at IITB</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">💻</span> C++</div>
-                <div class="skill-bar-percent">85%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="85"></div>
-              </div>
+            <div class="scroll-indicator" id="scrollIndicator">
+                <span>Scroll Down</span>
+                <div class="scroll-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M19 12l-7 7-7-7" />
+                    </svg>
+                </div>
             </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">📊</span> MATLAB</div>
-                <div class="skill-bar-percent">80%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="80"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">🌐</span> JavaScript</div>
-                <div class="skill-bar-percent">75%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="75"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="skills-category">
-          <h3 class="skills-category-title">Machine Learning & Data Science</h3>
-          <div class="skills-grid">
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">🔥</span> PyTorch</div>
-                <div class="skill-bar-percent">85%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="85"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">🧠</span> TensorFlow</div>
-                <div class="skill-bar-percent">80%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="80"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">📈</span> Scikit-learn</div>
-                <div class="skill-bar-percent">88%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="88"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">🐼</span> Pandas</div>
-                <div class="skill-bar-percent">90%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="90"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">🔢</span> NumPy</div>
-                <div class="skill-bar-percent">92%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="92"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="skills-category">
-          <h3 class="skills-category-title">Physics & Simulation</h3>
-          <div class="skills-grid">
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">⚛️</span> Quantum Mechanics</div>
-                <div class="skill-bar-percent">85%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="85"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">🌀</span> Condensed Matter</div>
-                <div class="skill-bar-percent">80%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="80"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">📐</span> Mathematical Modeling</div>
-                <div class="skill-bar-percent">88%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="88"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">💡</span> Numerical Methods</div>
-                <div class="skill-bar-percent">90%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="90"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="skills-category">
-          <h3 class="skills-category-title">Tools & Platforms</h3>
-          <div class="skills-grid">
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">🐙</span> Git/GitHub</div>
-                <div class="skill-bar-percent">85%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="85"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">📓</span> Jupyter</div>
-                <div class="skill-bar-percent">90%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="90"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">🐧</span> Linux</div>
-                <div class="skill-bar-percent">82%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="82"></div>
-              </div>
-            </div>
-            <div class="skill-bar-container">
-              <div class="skill-bar-header">
-                <div class="skill-bar-name"><span class="skill-icon">📝</span> LaTeX</div>
-                <div class="skill-bar-percent">88%</div>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-percent="88"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section class="section" id="journey">
-      <div class="section-header">
-        <h2>My Journey</h2>
-        <p>Academic milestones and achievements</p>
-      </div>
-      <div class="timeline">
-        <div class="timeline-item" data-year="2023">
-          <div class="timeline-content">
-            <h3>🎓 Joined IIT Bombay</h3>
-            <p>Started undergraduate studies in Engineering Physics</p>
-          </div>
-        </div>
-        <div class="timeline-item" data-year="2023">
-          <div class="timeline-content">
-            <h3>🔬 Physics Research</h3>
-            <p>Began exploring quantum mechanics and condensed matter physics</p>
-          </div>
-        </div>
-        <div class="timeline-item" data-year="2024">
-          <div class="timeline-content">
-            <h3>🤖 Machine Learning</h3>
-            <p>Started learning ML/AI and working on data science projects</p>
-          </div>
-        </div>
-        <div class="timeline-item" data-year="2024">
-          <div class="timeline-content">
-            <h3>💻 Project Development</h3>
-            <p>Completed multiple research projects in physics and ML</p>
-          </div>
-        </div>
-        <div class="timeline-item" data-year="2025">
-          <div class="timeline-content">
-            <h3>🚀 Building Portfolio</h3>
-            <p>Created this portfolio website to showcase my work</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="section" id="games">
-      <div class="section-header">
-        <h2>Fun Games</h2>
-        <p>Take a break and play a quick game</p>
-      </div>
-      
-      <!-- Game Tabs -->
-      <div class="game-tabs">
-        <button class="game-tab active" data-game="flappy">🐦 Flappy Bird</button>
-        <button class="game-tab" data-game="snake">🐍 Snake</button>
-        <button class="game-tab" data-game="tictactoe">⭕ Tic Tac Toe</button>
-        <button class="game-tab" data-game="memory">🧠 Memory</button>
-        <button class="game-tab" data-game="typing">⌨️ Typing Test</button>
-      </div>
-      
-      <!-- Flappy Bird Game -->
-      <div class="game-panel active" id="flappy-game">
-        <div class="game-container">
-          <canvas id="gameCanvas" width="400" height="500"></canvas>
-          <div class="game-controls">
-            <div class="game-score">Score: <span id="score">0</span></div>
-            <div class="game-status" id="gameStatus">Click START to begin!</div>
-            <button class="btn primary" id="startBtn">Start Game</button>
-          </div>
+        <!-- Marquee Section -->
+        <div class="marquee-section" aria-hidden="true">
+            <div class="marquee-track">
+                <div class="marquee-content">
+                    <span>Python</span><span class="marquee-dot">◆</span>
+                    <span>C++</span><span class="marquee-dot">◆</span>
+                    <span>PyTorch</span><span class="marquee-dot">◆</span>
+                    <span>TensorFlow</span><span class="marquee-dot">◆</span>
+                    <span>MATLAB</span><span class="marquee-dot">◆</span>
+                    <span>NumPy</span><span class="marquee-dot">◆</span>
+                    <span>Scikit-learn</span><span class="marquee-dot">◆</span>
+                    <span>LaTeX</span><span class="marquee-dot">◆</span>
+                    <span>Git</span><span class="marquee-dot">◆</span>
+                    <span>Jupyter Lab</span><span class="marquee-dot">◆</span>
+                </div>
+                <div class="marquee-content">
+                    <span>Python</span><span class="marquee-dot">◆</span>
+                    <span>C++</span><span class="marquee-dot">◆</span>
+                    <span>PyTorch</span><span class="marquee-dot">◆</span>
+                    <span>TensorFlow</span><span class="marquee-dot">◆</span>
+                    <span>MATLAB</span><span class="marquee-dot">◆</span>
+                    <span>NumPy</span><span class="marquee-dot">◆</span>
+                    <span>Scikit-learn</span><span class="marquee-dot">◆</span>
+                    <span>LaTeX</span><span class="marquee-dot">◆</span>
+                    <span>Git</span><span class="marquee-dot">◆</span>
+                    <span>Jupyter Lab</span><span class="marquee-dot">◆</span>
+                </div>
+            </div>
         </div>
-      </div>
-      
-      <!-- Snake Game -->
-      <div class="game-panel" id="snake-game">
-        <div class="game-container">
-          <canvas id="snakeCanvas" width="400" height="400"></canvas>
-          <div class="game-controls">
-            <div class="game-score">Score: <span id="snakeScore">0</span></div>
-            <div class="game-status" id="snakeStatus">Click START to begin!</div>
-            <button class="btn primary" id="snakeStartBtn">Start Game</button>
-          </div>
+
+        <!-- Fun Games Section -->
+        <section class="section" id="games">
+            <div class="section-header">
+                <span class="section-badge">Fun</span>
+                <h2>Fun Games</h2>
+                <p>Take a break and play a quick game</p>
+            </div>
+
+            <!-- Game Tabs -->
+            <div class="game-tabs">
+                <button class="game-tab active" data-game="flappy">🐦 Flappy Bird</button>
+                <button class="game-tab" data-game="snake">🐍 Snake</button>
+                <button class="game-tab" data-game="tictactoe">⭕ Tic Tac Toe</button>
+                <button class="game-tab" data-game="memory">🧠 Memory</button>
+                <button class="game-tab" data-game="typing">⌨️ Typing Test</button>
+            </div>
+
+            <!-- Flappy Bird Game -->
+            <div class="game-panel active" id="flappy-game">
+                <div class="game-container">
+                    <button class="game-zoom-btn" title="Toggle Fullscreen (Esc to exit)">🔍 Zoom In</button>
+                    <canvas id="gameCanvas" width="400" height="500"></canvas>
+                    <div class="game-controls">
+                        <div class="game-score">Score: <span id="score">0</span></div>
+                        <div class="game-status" id="gameStatus">Click START to begin!</div>
+                        <button class="btn primary" id="startBtn">Start Game</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Snake Game -->
+            <div class="game-panel" id="snake-game">
+                <div class="game-container">
+                    <button class="game-zoom-btn" title="Toggle Fullscreen (Esc to exit)">🔍 Zoom In</button>
+                    <canvas id="snakeCanvas" width="400" height="400"></canvas>
+                    <div class="game-controls">
+                        <div class="game-score">Score: <span id="snakeScore">0</span></div>
+                        <div class="game-status" id="snakeStatus">Click START to begin!</div>
+                        <button class="btn primary" id="snakeStartBtn">Start Game</button>
+                    </div>
                     <div class="game-instructions">
-            <span>Use Arrow Keys to move</span>
-          </div>
-          <!-- Mobile Touch Controls -->
-          <div class="snake-touch-controls">
-            <button class="snake-btn" id="snakeBtnUp">▲</button>
-            <div class="snake-btn-row">
-              <button class="snake-btn" id="snakeBtnLeft">◀</button>
-              <button class="snake-btn" id="snakeBtnDown">▼</button>
-              <button class="snake-btn" id="snakeBtnRight">▶</button>
+                        <span>Use Arrow Keys to move</span>
+                    </div>
+                    <!-- Mobile Touch Controls -->
+                    <div class="snake-touch-controls">
+                        <button class="snake-btn" id="snakeBtnUp">▲</button>
+                        <div class="snake-btn-row">
+                            <button class="snake-btn" id="snakeBtnLeft">◀</button>
+                            <button class="snake-btn" id="snakeBtnDown">▼</button>
+                            <button class="snake-btn" id="snakeBtnRight">▶</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Tic Tac Toe Game -->
-      <div class="game-panel" id="tictactoe-game">
-        <div class="game-container">
-          <div class="ttt-board" id="tttBoard">
-            <button class="ttt-cell" data-index="0"></button>
-            <button class="ttt-cell" data-index="1"></button>
-            <button class="ttt-cell" data-index="2"></button>
-            <button class="ttt-cell" data-index="3"></button>
-            <button class="ttt-cell" data-index="4"></button>
-            <button class="ttt-cell" data-index="5"></button>
-            <button class="ttt-cell" data-index="6"></button>
-            <button class="ttt-cell" data-index="7"></button>
-            <button class="ttt-cell" data-index="8"></button>
-          </div>
-          <div class="game-controls">
-            <div class="game-status" id="tttStatus">You are X. Your turn!</div>
-            <button class="btn primary" id="tttResetBtn">Reset Game</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Memory Game -->
-      <div class="game-panel" id="memory-game">
-        <div class="game-container">
-          <div class="memory-board" id="memoryBoard"></div>
-          <div class="game-controls">
-            <div class="game-score">Moves: <span id="memoryMoves">0</span></div>
-            <div class="game-status" id="memoryStatus">Match all the pairs!</div>
-            <button class="btn primary" id="memoryResetBtn">New Game</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Typing Test Game -->
-      <div class="game-panel" id="typing-game">
-        <div class="game-container typing-container">
-          <div class="typing-text" id="typingText">Click START to begin the typing test!</div>
-          <input type="text" class="typing-input" id="typingInput" placeholder="Start typing here..." disabled>
-          <div class="typing-stats">
-            <div class="typing-stat">
-              <span class="stat-value" id="typingWpm">0</span>
-              <span class="stat-label">WPM</span>
+            <!-- Tic Tac Toe Game -->
+            <div class="game-panel" id="tictactoe-game">
+                <div class="game-container">
+                    <button class="game-zoom-btn" title="Toggle Fullscreen (Esc to exit)">🔍 Zoom In</button>
+                    <div class="ttt-board" id="tttBoard">
+                        <button class="ttt-cell" data-index="0"></button>
+                        <button class="ttt-cell" data-index="1"></button>
+                        <button class="ttt-cell" data-index="2"></button>
+                        <button class="ttt-cell" data-index="3"></button>
+                        <button class="ttt-cell" data-index="4"></button>
+                        <button class="ttt-cell" data-index="5"></button>
+                        <button class="ttt-cell" data-index="6"></button>
+                        <button class="ttt-cell" data-index="7"></button>
+                        <button class="ttt-cell" data-index="8"></button>
+                    </div>
+                    <div class="game-controls">
+                        <div class="game-status" id="tttStatus">You are X. Your turn!</div>
+                        <button class="btn primary" id="tttResetBtn">Reset Game</button>
+                    </div>
+                </div>
             </div>
-            <div class="typing-stat">
-              <span class="stat-value" id="typingAccuracy">100</span>
-              <span class="stat-label">% Accuracy</span>
+
+            <!-- Memory Game -->
+            <div class="game-panel" id="memory-game">
+                <div class="game-container">
+                    <button class="game-zoom-btn" title="Toggle Fullscreen (Esc to exit)">🔍 Zoom In</button>
+                    <div class="memory-board" id="memoryBoard"></div>
+                    <div class="game-controls">
+                        <div class="game-score">Moves: <span id="memoryMoves">0</span></div>
+                        <div class="game-status" id="memoryStatus">Match all the pairs!</div>
+                        <button class="btn primary" id="memoryResetBtn">New Game</button>
+                    </div>
+                </div>
             </div>
-            <div class="typing-stat">
-              <span class="stat-value" id="typingTime">30</span>
-              <span class="stat-label">Seconds</span>
+
+            <!-- Typing Test Game -->
+            <div class="game-panel" id="typing-game">
+                <div class="game-container typing-container">
+                    <button class="game-zoom-btn" title="Toggle Fullscreen (Esc to exit)">🔍 Zoom In</button>
+                    <div class="typing-text" id="typingText">Click START to begin the typing test!</div>
+                    <input type="text" class="typing-input" id="typingInput" placeholder="Start typing here..."
+                        disabled>
+                    <div class="typing-stats">
+                        <div class="typing-stat">
+                            <span class="stat-value" id="typingWpm">0</span>
+                            <span class="stat-label">WPM</span>
+                        </div>
+                        <div class="typing-stat">
+                            <span class="stat-value" id="typingAccuracy">100</span>
+                            <span class="stat-label">% Accuracy</span>
+                        </div>
+                        <div class="typing-stat">
+                            <span class="stat-value" id="typingTime">30</span>
+                            <span class="stat-label">Seconds</span>
+                        </div>
+                    </div>
+                    <div class="game-controls">
+                        <div class="game-status" id="typingStatus">Click START to begin!</div>
+                        <button class="btn primary" id="typingStartBtn">Start Test</button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="game-controls">
-            <div class="game-status" id="typingStatus">Click START to begin!</div>
-            <button class="btn primary" id="typingStartBtn">Start Test</button>
-          </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section" id="projects">
+            <div class="section-header">
+                <span class="section-badge">Portfolio</span>
+                <h2>Projects</h2>
+                <p>A selection of my academic work and research</p>
+            </div>
+            <div class="carousel-container">
+                <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous project">❮</button>
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="projectsCarousel">
+                        <!-- Projects will be rendered here -->
+                    </div>
+                </div>
+                <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next project">❯</button>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+        </section>
+
+        <!-- Quote / Philosophy Section -->
+        <section class="section quote-section" id="philosophy">
+            <div class="quote-card">
+                <div class="quote-decoration">"</div>
+                <blockquote>
+                    The important thing in science is not so much to obtain new facts as to discover new ways of
+                    thinking about them.
+                </blockquote>
+                <cite>— Sir William Lawrence Bragg</cite>
+            </div>
+        </section>
+
+        <!-- Resume Section -->
+        <section class="section" id="resume">
+            <div class="section-header">
+                <span class="section-badge">Career</span>
+                <h2>Resume / CV</h2>
+                <p>View or download my curriculum vitae</p>
+            </div>
+            <div class="resume-container">
+                <div class="resume-card">
+                    <div class="resume-icon-wrapper">
+                        <div class="resume-icon-bg"></div>
+                        <span class="resume-icon">📄</span>
+                    </div>
+                    <h3>Curriculum Vitae</h3>
+                    <p>My complete academic and professional background, including education, research experience,
+                        projects, and skills.</p>
+                    <div class="resume-actions">
+                        <a href="https://github.com/Soumik969/All_at_once/blob/main/Long_2page%20(1).pdf"
+                            target="_blank" rel="noopener" class="btn primary btn-glow" id="viewCVBtn">
+                            <span>View CV</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                        <a href="https://raw.githubusercontent.com/Soumik969/All_at_once/main/Long_2page%20(1).pdf"
+                            download class="btn outline" id="downloadCVBtn">
+                            <span>Download PDF</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="section" id="contact">
+            <div class="section-header">
+                <span class="section-badge">Connect</span>
+                <h2>Let's Connect</h2>
+                <p>Feel free to reach out for collaborations or questions</p>
+            </div>
+            <div class="contact-grid">
+                <a href="mailto:soumik.sahoo@iitb.ac.in" class="contact-card" id="emailCard">
+                    <div class="contact-icon-wrapper">
+                        <span class="contact-icon">✉️</span>
+                    </div>
+                    <span class="contact-label">Email</span>
+                    <span class="contact-value">soumik.sahoo@iitb.ac.in</span>
+                    <span class="contact-arrow">→</span>
+                </a>
+                <a href="https://github.com/Soumik969" target="_blank" rel="noopener" class="contact-card"
+                    id="githubCard">
+                    <div class="contact-icon-wrapper">
+                        <span class="contact-icon">🐙</span>
+                    </div>
+                    <span class="contact-label">GitHub</span>
+                    <span class="contact-value">github.com/Soumik969</span>
+                    <span class="contact-arrow">→</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2025 Soumik Sahoo. Crafted with ☕ at IIT Bombay.</p>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
         </div>
-      </div>
-    </section>
+    </footer>
 
-    <section class="section" id="projects">
-      <div class="section-header">
-        <h2>Projects</h2>
-        <p>A selection of my academic work and research</p>
-      </div>
-      <div class="carousel-container">
-        <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous project">❮</button>
-        <div class="carousel-wrapper">
-          <div class="carousel-track" id="projectsCarousel">
-            <!-- Projects will be rendered here -->
-          </div>
-        </div>
-        <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next project">❯</button>
-        <div class="carousel-dots" id="carouselDots"></div>
-      </div>
-    </section>
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+    </button>
 
-    <section class="section" id="resume">
-      <div class="section-header">
-        <h2>Resume / CV</h2>
-        <p>View or download my curriculum vitae</p>
-      </div>
-      <div class="resume-container">
-        <div class="resume-card">
-          <div class="resume-icon">📄</div>
-          <h3>Curriculum Vitae</h3>
-          <p>My complete academic and professional background, including education, research experience, projects, and skills.</p>
-          <div class="resume-actions">
-            <a href="https://github.com/Soumik969/All_at_once/blob/main/Long_2page%20(1).pdf" target="_blank" rel="noopener" class="btn primary">
-              <span>View CV</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
-            <a href="https://raw.githubusercontent.com/Soumik969/All_at_once/main/Long_2page%20(1).pdf" download class="btn outline">
-              <span>Download PDF</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="section-header">
-        <h2>Contact</h2>
-        <p>Feel free to reach out for collaborations or questions</p>
-      </div>
-      <div class="contact-grid">
-        <a href="mailto:soumik.sahoo@iitb.ac.in" class="contact-card">
-          <span class="contact-icon">✉</span>
-          <span class="contact-label">Email</span>
-          <span class="contact-value">soumik.sahoo@iitb.ac.in</span>
-        </a>
-        <a href="https://github.com/Soumik969" target="_blank" rel="noopener" class="contact-card">
-          <span class="contact-icon">⌘</span>
-          <span class="contact-label">GitHub</span>
-          <span class="contact-value">github.com/Soumik969</span>
-        </a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>&copy; 2025 Soumik Sahoo. All rights reserved.</p>
-  </footer>
-
-  <!-- Back to Top Button -->
-  <button class="back-to-top" id="backToTop" aria-label="Back to top">
-    ↑
-  </button>
-
-  <script src="script.js"></script>
+    <script src="script (1).js"></script>
 </body>
+
 </html>
